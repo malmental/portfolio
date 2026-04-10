@@ -34,7 +34,7 @@ import { isTransitionEnabled } from "../data";
 import "../styles/styles.css";
 import { ViewTransitions } from "astro:transitions";
 
-const { title = "Salem.Dev", description = "Portfolio of Salem - Developer" } =
+const { title = "Salem.dev", description = "Portfolio of Salem - Developer" } =
   Astro.props;
 ---
 
@@ -64,14 +64,16 @@ const { title = "Salem.Dev", description = "Portfolio of Salem - Developer" } =
     </script>
   </head>
   <body>
-    <button
-      type="button"
-      class="theme-toggle"
-      aria-label="Toggle color theme"
-      data-theme-toggle
-    >
-      <span data-theme-icon class="theme-icon"></span>
-    </button>
+    <div style="position:fixed;top:0.5rem;right:0.25rem;z-index:9999;transform:translateZ(0);">
+      <button
+        type="button"
+        class="theme-toggle"
+        aria-label="Toggle color theme"
+        data-theme-toggle
+      >
+        <span data-theme-icon class="theme-icon"></span>
+      </button>
+    </div>
     <div class="site-shell">
       <slot />
     </div>

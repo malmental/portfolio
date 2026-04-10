@@ -1,101 +1,125 @@
 ---
 /**
  * =============================================================================
- * BLOGSECTION.ASTRO - WRITING/BLOG PREVIEW SECTION
+ * BLOGSECTION.ASTRO - CURRENT PROJECTS / VIDEO PREVIEW SECTION
  * =============================================================================
  *
  * PURPOSE:
- *   Section showcasing recent blog posts. Displays a descriptive text about
- *   Salem's writing philosophy, a "View All Posts" link, and a sidebar listing
- *   the 5 most recent blog posts with previews.
+ *   Section showcasing current projects via short video previews.
+ *   Displays Academy WebApp first with Try the app + screenshot, then video + text.
  *
  * PORTFOLIO USE CASE:
- *   - Central hub for Salem's written content/thought leadership
- *   - Partial blog listing (5 recent) drives traffic to /blog for full archive
- *   - "Writing" heading sets tone for the content type (vs typical "Blog")
- *
- * DATA FETCHING:
- *   - Uses Astro.glob() to dynamically import all .md files from blogs/
- *   - Sorts by pubDate descending (newest first)
- *   - Slices to show only first 5 posts: allPosts.slice(0, 5)
+ *   - Academy WebApp: "Try the app!" CTA with screenshot, then video with description
+ *   - Godot Game demos centered at the bottom
  *
  * LAYOUT STRUCTURE:
- *   - Left/Top (60%): "Writing" heading + descriptive text + "View All Posts" link
- *   - Right/Bottom (30%): "Recent Blogs" heading + 5 most recent post items
- *   - Anchor ID: 'blog' enables navigation from navbar
- *
- * SUB-COMPONENTS:
- *   - Section: Wrapper component
- *   - BlogItem: Individual post preview card (title, truncated desc, date)
- *
- * KEY FEATURES:
- *   - "View All Posts" link navigates to /blog page
- *   - Arrow icon SVG appears on hover (group-hover:block)
- *   - Posts show truncated description (50 chars max)
- *
- * MODIFICATION NOTES:
- *   - To show more/fewer posts: change slice(0, 5) to desired number
- *   - To filter by category: add frontmatter category and filter in allPosts
- *   - To change "Writing" heading: modify h3 text content
+ *   1. Current Projects header
+ *   2. "Try the app!" + Academy WebApp screenshot (text LEFT, image RIGHT)
+ *   3. Academy WebApp video + text (video LEFT, text RIGHT)
+ *   4. Godot Game centered
  */
 
-import BlogItem from '../BlogItem.astro';
+import VideoItem from '../VideoItem.astro';
+import ImageItem from '../ImageItem.astro';
 import Section from '../Section.astro';
 const { writingText } = Astro.props;
 
-const allPosts = await Astro.glob('../../pages/blogs/*.md');
-allPosts.sort(
-  (a, b) =>
-    Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)
-);
-const recentPosts = allPosts.slice(0, 5);
+const webappProject = {
+  videoSrc: '/videos/webapp-demo.mp4',
+  title: 'Dashboard Web App',
+  description: 'Full MVC Arquitecture made with PHP & Laravel.',
+};
+
+const godotProjects = [
+  {
+    videoSrc: '/videos/game-demo.mp4',
+    title: 'Culto-Nocturo',
+    description: 'A first person rouge-like shooter game. I haven`t been able to spend so much time working on it because of school but i`m still on it!.',
+  },
+  {
+    videoSrc: '/videos/game-demo-2.mp4',
+    title: 'Level desing and Movement with Godot Engine',
+    description: 'Exploration of the character movement mechanics and physics interactions in the game environment. Btw, this is a free opensource platform, an increible tool!.',
+  },
+];
 ---
 
-<Section styles='p-1' ids='blog'>
-  <div
-    class='flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
-    '
-  >
-    <div class='box introduction w-[100%] md:w-[60%] p-5'>
-      <div class='box-text'>
-        <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem]'
-        >
-          Writing
-        </h3>
-        <p
-          class='intro-bio mt-5 md:mt-8 mb-10 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify'
-        >
-          {writingText}
-        </p>
-      </div>
-      <a
-        class='flex items-center text-slate-700 hover:text-black gap-4 group mt-5 ml-1 text-xl duration-75 transition-all'
-        href='/blog'
-        >View All Posts <svg
-          xmlns='http://www.w3.org/2000/svg'
-          fill='none'
-          viewBox='0 0 24 24'
-          stroke-width='1.5'
-          stroke='currentColor'
-          class='size-6 hidden group-hover:block transition-all duration-0'
-        >
-          <path
-            stroke-linecap='round'
-            stroke-linejoin='round'
-            d='M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3'></path>
-        </svg></a
-      >
-    </div>
-    <div
-      class='info-box w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
+<Section styles='p-8 md:p-16 pt-12 pb-12' ids='blog'>
+  <div class='w-full md:w-[75%] p-5'>
+    <h3
+      class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem] animate-on-scroll mb-10'
     >
-      <h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
-        Recent Blogs
-      </h3>
-      <div class='flex flex-col p-1'>
-        {recentPosts.map((post) => <BlogItem post={post} />)}
-      </div>
+      Current Projects
+    </h3>
+    <p
+      class='intro-bio mt-12 mb-20 leading-6 md:leading-7 md:text-2xl text-slate-700 animate-on-scroll'
+    >
+      {writingText}
+    </p>
+  </div>
+</Section>
+
+<Section styles='p-1 pb-16'>
+  <div class='max-w-screen-xl mx-auto w-full min-h-[60vh] flex items-center gap-8'>
+    <div class='w-[50%] p-5 text-left'>
+      <p class='text-2xl md:text-4xl font-bold text-slate-700 animate-on-scroll'>
+        Try live the deployed app INCIDENsly 𝒘ebApp
+      </p>
+    </div>
+    <div class='w-[50%] p-5'>
+      <a
+        href='https://incidenslywebapp.vercel.app/'
+        target='_blank'
+        rel='noopener noreferrer'
+        class='bg-white p-4 rounded-lg shadow-lg inline-block w-full screenshot-link'
+      >
+        <ImageItem
+          imageSrc='/images/academy-screenshot-1.png'
+          alt='Academy WebApp'
+          caption='API REST made with PHP & Laravel'
+        />
+      </a>
+    </div>
+  </div>
+</Section>
+
+<Section styles='p-1 pt-12'>
+  <div class='max-w-screen-xl mx-auto w-full min-h-[60vh] flex items-center gap-8'>
+    <div class='w-[50%] p-5'>
+      <VideoItem
+        videoSrc={webappProject.videoSrc}
+        title={webappProject.title}
+        description={webappProject.description}
+        bordered={false}
+      />
+    </div>
+    <div class='w-[50%] p-5 text-right'>
+      <h4 class='font-bold text-3xl md:text-4xl mb-4 animate-on-scroll'>
+        {webappProject.title}
+      </h4>
+      <p class='text-lg md:text-xl text-slate-700 leading-relaxed animate-on-scroll'>
+        {webappProject.description}
+      </p>
+    </div>
+  </div>
+</Section>
+
+<Section styles='p-1 pt-10 pb-10'>
+  <div class='max-w-screen-xl mx-auto w-full p-5 flex flex-col items-center gap-8'>
+    <h4 class='font-bold text-3xl md:text-4xl animate-on-scroll'>
+      My WIP personal project
+    </h4>
+    <div class='w-full md:w-[50%] flex flex-col gap-10 md:gap-14 justify-center'>
+      {godotProjects.map((project) => (
+        <div class='w-full'>
+          <VideoItem
+            videoSrc={project.videoSrc}
+            title={project.title}
+            description={project.description}
+            bordered={false}
+          />
+        </div>
+      ))}
     </div>
   </div>
 </Section>
