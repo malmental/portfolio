@@ -21,55 +21,76 @@
  *
  * SUB-COMPONENTS:
  *   - Section: Wrapper component
- *   - ContactBoxItem: Individual social link with arrow hover effect
+ *   - ContactBoxItem: Individual social link with icon display
  *
  * DATA RECEIVED:
  *   - contactText: Descriptive text inviting connection (string)
  *   - contactOptions: Array of { name, link } objects
  *
  * LINK ITEMS:
- *   - Each ContactBoxItem renders as a clickable row
- *   - Arrow SVG icon appears on hover (group-hover:block)
+ *   - Each ContactBoxItem renders as a clickable row with icon
  *   - Border animates from transparent to black on hover
  *
  * MODIFICATION NOTES:
  *   - To add email contact: add { name: 'Email', link: 'mailto:salem@example.com' }
  *   - To change heading copy: modify "Let's Connect" and "Contact Me" text
- *   - To reorder links: modify order in contactOptions array (data.js)
+ *   - To reorder links: modify order below
  */
 
 import ContactBoxItem from '../ContactBoxItem.astro';
 import Section from '../Section.astro';
-const { contactText, contactOptions } = Astro.props;
+import AsciiCanvas from '../AsciiCanvas.astro';
+
+const emailIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title xmlns="">email-twotone</title><path fill="currentColor" fill-opacity="0" d="M12 11l-8 -5h16l-8 5Z"><animate fill="freeze" attributeName="fill-opacity" begin="0.9s" dur="0.15s" to=".3"/></path><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="66" d="M4 5h16c0.55 0 1 0.45 1 1v12c0 0.55 -0.45 1 -1 1h-16c-0.55 0 -1 -0.45 -1 -1v-12c0 -0.55 0.45 -1 1 -1Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.6s" values="66;0"/></path><path stroke-dasharray="24" stroke-dashoffset="24" d="M3 6.5l9 5.5l9 -5.5"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.3s" to="0"/></path></g></svg>`;
+
+const whatsappIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title xmlns="">baseline-whatsapp</title><path fill="currentColor" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2c-5.46 0-9.91 4.45-9.91 9.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21c5.46 0 9.91-4.45 9.91-9.91c0-2.65-1.03-5.14-2.9-7.01m-7.01 15.24c-1.48 0-2.93-.4-4.2-1.15l-.3-.18l-3.12.82l.83-3.04l-.2-.31a8.26 8.26 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.24-8.24c2.2 0 4.27.86 5.82 2.42a8.18 8.18 0 0 1 2.41 5.83c.02 4.54-3.68 8.23-8.22 8.23m4.52-6.16c-.25-.12-1.47-.72-1.69-.81c-.23-.08-.39-.12-.56.12c-.17.25-.64.81-.78.97c-.14.17-.29.19-.54.06c-.25-.12-1.05-.39-1.99-1.23c-.74-.66-1.23-1.47-1.38-1.72c-.14-.25-.02-.38.11-.51c.11-.11.25-.29.37-.43s.17-.25.25-.41c.08-.17.04-.31-.02-.43s-.56-1.34-.76-1.84c-.2-.48-.41-.42-.56-.43h-.48c-.17 0-.43.06-.66.31c-.22.25-.86.85-.86 2.07s.89 2.4 1.01 2.56c.12.17 1.75 2.67 4.23 3.74c.59.26 1.05.41 1.41.52c.59.19 1.13.16 1.56.1c.48-.07 1.47-.6 1.67-1.18c.21-.58.21-1.07.14-1.18s-.22-.16-.47-.28"/></svg>`;
+
+const githubIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 20 20"><title xmlns="">github</title><path fill="currentColor" d="M13.18 11.309c-.718 0-1.3.807-1.3 1.799c0 .994.582 1.801 1.3 1.801s1.3-.807 1.3-1.801c-.001-.992-.582-1.799-1.3-1.799m4.526-4.683c.149-.365.155-2.439-.635-4.426c0 0-1.811.199-4.551 2.08c-.575-.16-1.548-.238-2.519-.238c-.973 0-1.945.078-2.52.238C4.74 2.399 2.929 2.2 2.929 2.2c-.789 1.987-.781 4.061-.634 4.426C1.367 7.634.8 8.845.8 10.497c0 7.186 5.963 7.301 7.467 7.301l1.734.002l1.732-.002c1.506 0 7.467-.115 7.467-7.301c0-1.652-.566-2.863-1.494-3.871m-7.678 10.289h-.056c-3.771 0-6.709-.449-6.709-4.115c0-.879.31-1.693 1.047-2.369C5.537 9.304 7.615 9.9 9.972 9.9h.056c2.357 0 4.436-.596 5.664.531c.735.676 1.045 1.49 1.045 2.369c0 3.666-2.937 4.115-6.709 4.115m-3.207-5.606c-.718 0-1.3.807-1.3 1.799c0 .994.582 1.801 1.3 1.801s1.301-.807 1.301-1.801c0-.992-.582-1.799-1.301-1.799"/></svg>`;
+
+const linkedinIcon = `<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><title xmlns="">linkedin</title><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg>`;
+
+const { contactText } = Astro.props;
 ---
 
-<Section styles='p-1' ids='contact'>
+<Section styles='p-8 md:p-16 overflow-hidden bg-gray-100' ids='contact'>
   <div
-    class='flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
+    class='relative flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
   >
-    <div class='box introduction w-[100%] md:w-[60%] p-5'>
+    <div class='box introduction relative z-10 w-[100%] md:w-[60%] p-5'>
       <div class='box-text'>
         <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem]'
+          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem] animate-on-scroll'
         >
-          Let's Connect
+          Contact me
         </h3>
         <p
-          class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify'
+          class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify animate-on-scroll'
         >
           {contactText}
         </p>
       </div>
     </div>
     <div
-      class='info-box w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
+      class='info-box relative z-10 w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
     >
-      <h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
+      {/*}<h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
         Contact Me
-      </h3>
+      </h3>*/}
       <div class='flex flex-col p-1'>
-        {contactOptions.map((contact) => <ContactBoxItem contact={contact} />)}
+        <ContactBoxItem contact={{ name: 'Email', link: 'mailto:orlandorojasoyarzun@gmail.com' }} icon={emailIcon} />
+        <ContactBoxItem contact={{ name: 'WhatsApp', link: 'https://wa.me/34634653926' }} icon={whatsappIcon} />
+        <ContactBoxItem contact={{ name: 'GitHub', link: 'https://github.com/malmental' }} icon={githubIcon} />
+        <ContactBoxItem contact={{ name: 'LinkedIn', link: 'https://www.linkedin.com/in/orlando-rojas-oyarz%C3%BAn/' }} icon={linkedinIcon} />
       </div>
+    </div>
+    <div class='hidden md:flex absolute md:right-[-5rem] md:bottom-[-10rem] lg:right-[-3rem] lg:bottom-[-13rem] xl:right-0 px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
+      <AsciiCanvas
+        gifSources={['/gif/Cube-shape-animation.gif']}
+        desktopColumns={50}
+        desktopWidth='min(100%, 38rem)'
+        desktopMinHeight='28rem'
+        desktopFontSize='clamp(0.48rem, 0.76vw, 0.68rem)'
+      />
     </div>
   </div>
 </Section>
