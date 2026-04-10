@@ -1,0 +1,235 @@
+---
+const {
+  gifSources = ['/gif/Cube-shape animation-2.gif'],
+  desktopColumns = 64,
+  desktopWidth = 'min(100%, 52rem)',
+  desktopMinHeight = '36rem',
+  desktopFontSize = 'clamp(0.62rem, 1vw, 0.88rem)',
+  className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['ascii-canvas-shell', className]}
+  data-ascii-canvas
+  data-gif-sources={JSON.stringify(gifSources)}
+  data-desktop-columns={desktopColumns}
+  style={`--ascii-desktop-width:${desktopWidth};--ascii-desktop-min-height:${desktopMinHeight};--ascii-desktop-font-size:${desktopFontSize};`}
+>
+  <pre class="ascii-output" aria-label="Animated ASCII artwork"></pre>
+</div>
+
+<script>
+  const canvases = document.querySelectorAll('[data-ascii-canvas]');
+
+  canvases.forEach((root) => {
+    if (root.dataset.initialized === 'true') {
+      return;
+    }
+
+    root.dataset.initialized = 'true';
+
+    const output = root.querySelector('.ascii-output');
+    if (!output) {
+      return;
+    }
+
+    const hiddenCanvas = document.createElement('canvas');
+    const context = hiddenCanvas.getContext('2d', { willReadFrequently: true });
+    const charset = ' .,:-=+*#%@';
+    const gifSources = JSON.parse(root.dataset.gifSources || '[]');
+    const desktopColumns = Number(root.dataset.desktopColumns || 64);
+    let rafId = 0;
+    let resizeDebounce = 0;
+
+    const frameToAscii = (imageSource, width, height) => {
+      const columns = desktopColumns;
+      const sourceAspect = height / width || 1;
+      const rows = Math.max(16, Math.floor(columns * sourceAspect * 0.5));
+
+      hiddenCanvas.width = columns;
+      hiddenCanvas.height = rows;
+      context.clearRect(0, 0, columns, rows);
+      context.drawImage(imageSource, 0, 0, columns, rows);
+
+      const { data } = context.getImageData(0, 0, columns, rows);
+      let asciiFrame = '';
+
+      for (let y = 0; y < rows; y += 1) {
+        let line = '';
+
+        for (let x = 0; x < columns; x += 1) {
+          const pixelIndex = (y * columns + x) * 4;
+          const red = data[pixelIndex];
+          const green = data[pixelIndex + 1];
+          const blue = data[pixelIndex + 2];
+          const alpha = data[pixelIndex + 3] / 255;
+          const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) * alpha;
+          const characterIndex = Math.min(
+            charset.length - 1,
+            Math.floor((luminance / 255) * (charset.length - 1))
+          );
+
+          line += alpha < 0.08 ? ' ' : charset[characterIndex];
+        }
+
+        asciiFrame += `${line}\n`;
+      }
+
+      return asciiFrame;
+    };
+
+    const animateDecodedGif = async (sourcePath) => {
+      if (!('ImageDecoder' in window)) {
+        return false;
+      }
+
+      const response = await fetch(sourcePath);
+      if (!response.ok) {
+        return false;
+      }
+
+      const data = await response.arrayBuffer();
+      const decoder = new window.ImageDecoder({ data, type: 'image/gif' });
+
+      await decoder.tracks.ready;
+      const track = decoder.tracks.selectedTrack;
+      const frameCount = track?.frameCount ?? 0;
+
+      if (!frameCount) {
+        decoder.close();
+        return false;
+      }
+
+      const decodedFrames = [];
+
+      for (let index = 0; index < frameCount; index += 1) {
+        const result = await decoder.decode({ frameIndex: index });
+        const { image, complete } = result;
+        const duration = image.duration > 0 ? image.duration : 90_000;
+        decodedFrames.push({
+          ascii: frameToAscii(image, image.displayWidth, image.displayHeight),
+          duration: duration / 1000,
+        });
+        image.close();
+
+        if (!complete) {
+          break;
+        }
+      }
+
+      decoder.close();
+
+      if (!decodedFrames.length) {
+        return false;
+      }
+
+      let frameIndex = 0;
+      let lastTime = 0;
+
+      const renderFrame = (time) => {
+        if (!decodedFrames.length) {
+          return;
+        }
+
+        if (!lastTime) {
+          lastTime = time;
+          output.textContent = decodedFrames[frameIndex].ascii;
+        }
+
+        const currentFrame = decodedFrames[frameIndex];
+        if (time - lastTime >= currentFrame.duration) {
+          frameIndex = (frameIndex + 1) % decodedFrames.length;
+          output.textContent = decodedFrames[frameIndex].ascii;
+          lastTime = time;
+        }
+
+        rafId = window.requestAnimationFrame(renderFrame);
+      };
+
+      output.textContent = decodedFrames[0].ascii;
+      rafId = window.requestAnimationFrame(renderFrame);
+      return true;
+    };
+
+    const animateStaticGifFallback = (sourcePath) =>
+      new Promise((resolve) => {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          output.textContent = frameToAscii(img, img.naturalWidth, img.naturalHeight);
+          resolve(true);
+        };
+        img.onerror = () => resolve(false);
+        img.src = sourcePath;
+      });
+
+    const stop = () => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+        rafId = 0;
+      }
+    };
+
+    const start = async () => {
+      stop();
+
+      for (const sourcePath of gifSources) {
+        try {
+          if (await animateDecodedGif(sourcePath)) {
+            return;
+          }
+        } catch {}
+
+        try {
+          if (await animateStaticGifFallback(sourcePath)) {
+            return;
+          }
+        } catch {}
+      }
+
+      output.textContent = 'ASCII unavailable';
+    };
+
+    start();
+
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeDebounce);
+      resizeDebounce = window.setTimeout(() => {
+        start();
+      }, 120);
+    });
+
+    window.addEventListener(
+      'astro:before-swap',
+      () => {
+        stop();
+      },
+      { once: true }
+    );
+  });
+</script>
+
+<style>
+  .ascii-canvas-shell {
+    width: var(--ascii-desktop-width);
+    margin-inline: auto;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .ascii-output {
+    min-height: var(--ascii-desktop-min-height);
+    margin: 0;
+    overflow: hidden;
+    white-space: pre;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: var(--ascii-desktop-font-size);
+    line-height: 0.86;
+    letter-spacing: 0;
+    color: rgba(36, 50, 65, 0.94);
+    background: transparent;
+    padding: 0;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+</style>
