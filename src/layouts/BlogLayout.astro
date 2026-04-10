@@ -1,4 +1,41 @@
 ---
+/**
+ * =============================================================================
+ * BLOGLAYOUT.ASTRO - BLOG POST DOCUMENT WRAPPER
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Specialized layout for rendering individual blog post pages. Wraps blog
+ *   markdown content with typography styles, metadata display, and consistent
+ *   navigation/footer structure.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Used as the layout for all markdown files in src/pages/blogs/
+ *   - Renders blog posts with large title, publication date/author, optional
+ *     hero image, and formatted body content
+ *   - Includes Navbar (React, client-side hydrated) and Footer
+ *
+ * KEY FEATURES:
+ *   1. Renders frontmatter title as prominent <h1>
+ *   2. Displays publication date and author below title
+ *   3. Optional hero image (displayed below metadata, above content)
+ *   4. Uses blog.css for Markdown content typography
+ *   5. Passes title/description to MainLayout for SEO
+ *
+ * FRONTMATTER REQUIREMENTS (from blog markdown files):
+ *   - title: string (post title, used as <h1> and page title)
+ *   - description: string (for meta SEO)
+ *   - pubDate: string (publication date)
+ *   - author: string (author name)
+ *   - heroImage: string (optional, path to image)
+ *   - badge: string (optional, not used in this layout)
+ *
+ * MODIFICATION NOTES:
+ *   - To change typography: modify blog.css
+ *   - To add tags/categories: extend frontmatter and render here
+ *   - To add comments section: would need external integration (e.g., utterances)
+ */
+
 import { Image } from 'astro:assets';
 import MainLayout from './MainLayout.astro';
 import Footer from '../components/Footer.astro';

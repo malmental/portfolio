@@ -1,4 +1,34 @@
 ---
+/**
+ * =============================================================================
+ * SKILLITEM.ASTRO - INDIVIDUAL SKILL BADGE
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Renders a single skill or technology as a rounded pill badge. Used
+ *   within SkillsBox to display all technical competencies.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Represents one technical skill (e.g., "React", "Node.js", "Git")
+ *   - Clean, minimal badge design for easy scanning
+ *   - Centered text with rounded background
+ *
+ * PROPS:
+ *   - skill: string (the skill name/label to display)
+ *
+ * STYLING:
+ *   - Rounded corners: rounded-full
+ *   - Padding: p-2 mobile, p-3 desktop
+ *   - Minimum width: 60px (ensures consistent badge sizing)
+ *   - Background: bg-slate-100 (light gray)
+ *   - Font: semibold weight
+ *
+ * MODIFICATION NOTES:
+ *   - To change badge colors: modify bg-slate-100
+ *   - To change text size: modify text-sm or add text-* classes
+ *   - To add icons: could add an icon library integration
+ */
+
 const { skill } = Astro.props;
 ---
 

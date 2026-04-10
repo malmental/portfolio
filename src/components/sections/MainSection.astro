@@ -1,4 +1,46 @@
 ---
+/**
+ * =============================================================================
+ * MAINSECTION.ASTRO - HERO PRESENTATION SECTION
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   The hero/introductory section of the portfolio homepage. Displays the
+ *   portfolio owner's name as a large headline, a biography paragraph, and a
+ *   sidebar featuring selected projects. Layout: side-by-side on desktop,
+ *   stacked on mobile.
+ *
+ * PORTFOLIO USE CASE:
+ *   - This is the FIRST thing visitors see - your visual introduction
+ *   - The large typography with the name creates immediate identity
+ *   - Featured projects sidebar provides quick access to key works
+ *
+ * LAYOUT STRUCTURE:
+ *   - Left/Top (60%): Name headline + bio paragraph
+ *   - Right/Bottom (30%): "Selected Projects" heading + project links
+ *   - Responsive: stacks vertically on mobile, horizontal split on desktop
+ *
+ * SUB-COMPONENTS:
+ *   - Navbar: React component for responsive navigation
+ *   - Section: Wrapper providing consistent section styling
+ *   - SelectedProjectBox: Container for project links
+ *
+ * DATA RECEIVED:
+ *   - navLinks: Array of navigation link objects
+ *   - myName: Portfolio owner name (string)
+ *   - myBio: Introduction/bio paragraph (string)
+ *   - selectedProjects: Array of project objects { name, link }
+ *
+ * TYPOGRAPHY:
+ *   - Name: 4rem mobile → 7rem XL desktop (bold, leading tight)
+ *   - Bio: 1rem mobile → 1.5rem desktop (text-slate-700, text-justify)
+ *
+ * MODIFICATION NOTES:
+ *   - To change hero background: modify Section wrapper classes
+ *   - To adjust layout proportions: modify w-[60%] and w-[30%] percentages
+ *   - To reorder: currently name/bio left, projects right (swap container order)
+ */
+
 import Navbar from '../Navbar';
 import Section from '../Section.astro';
 import SelectedProjectBox from '../SelectedProjectBox.astro';

@@ -1,4 +1,34 @@
 ---
+/**
+ * =============================================================================
+ * SELECTEDPROJECTITEM.ASTRO - INDIVIDUAL PROJECT LINK
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Individual project link row with interactive hover states. Displays project
+ *   name with an arrow icon that animates in on hover. The entire row is
+ *   clickable, linking to the project's live demo, repository, or case study.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Represents a single featured project in the sidebar
+ *   - Clean, minimal design with focus on project name
+ *   - Arrow icon provides visual affordance for "learn more" action
+ *
+ * PROPS:
+ *   - project: Object { name: string, link: string }
+ *
+ * HOVER STATES:
+ *   - Text color: text-slate-500 → text-black
+ *   - Border: transparent → border-b-2 (black)
+ *   - Font weight: normal → semibold
+ *   - Arrow SVG: hidden → block
+ *
+ * MODIFICATION NOTES:
+ *   - To change arrow icon: replace the SVG element
+ *   - To change hover colors: modify text-slate-500 and hover:text-black
+ *   - To add project description: extend markup (currently name-only)
+ */
+
 const { project } = Astro.props;
 ---
 

@@ -1,4 +1,31 @@
 ---
+/**
+ * =============================================================================
+ * SELECTEDPROJECTBOX.ASTRO - FEATURED PROJECTS CONTAINER
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Container component that renders a vertical list of featured project links
+ *   in the hero sidebar. Each item is a SelectedProjectItem with hover effects.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Displays 3-5 key projects in the hero section sidebar
+ *   - Provides immediate access to Salem's best/representative work
+ *   - Clean list format with arrow indicators on hover
+ *
+ * DATA FLOW:
+ *   - Receives: projects array from data.js (selectedProjects)
+ *   - Renders: Maps each project object to a SelectedProjectItem component
+ *   - Each item: { name: string, link: string }
+ *
+ * SUB-COMPONENTS:
+ *   - SelectedProjectItem: Individual project link with arrow hover effect
+ *
+ * MODIFICATION NOTES:
+ *   - To change list styling: modify flex-col and padding classes
+ *   - To change spacing: modify gap classes on container
+ */
+
 import SelectedProjectItem from './SelectedProjectItem.astro';
 
 const { projects = {} } = Astro.props;

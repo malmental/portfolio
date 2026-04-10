@@ -1,4 +1,37 @@
 ---
+/**
+ * =============================================================================
+ * SKILLSBOX.ASTRO - TECHNICAL SKILLS CONTAINER
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Container component that renders a flexible-wrap list of skill badges.
+ *   Displays Salem's technical competencies as rounded pill-style badges.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Shows technical skills/tool proficiency at a glance
+ *   - Flex-wrap allows dynamic layout based on skill count
+ *   - Badges are visually distinct (rounded, light gray background)
+ *
+ * DATA FLOW:
+ *   - Receives: skills array from data.js
+ *   - Renders: Maps each skill string to a SkillItem component
+ *
+ * SUB-COMPONENTS:
+ *   - SkillItem: Individual skill badge with rounded styling
+ *
+ * LAYOUT:
+ *   - Width: 80% of container on desktop, full width on mobile
+ *   - Flex-wrap: enables badges to flow naturally across lines
+ *   - Gap: 0.75rem (gap-3) between badges
+ *   - Margin: top/bottom margin for spacing around the container
+ *
+ * MODIFICATION NOTES:
+ *   - To change badge size: modify p-2 (padding) in SkillItem
+ *   - To change wrap behavior: modify flex-wrap class
+ *   - To adjust spacing: modify gap and margin classes
+ */
+
 import SkillItem from './SkillItem.astro';
 
 const { skills = [] } = Astro.props;

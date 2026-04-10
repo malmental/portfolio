@@ -1,4 +1,42 @@
 ---
+/**
+ * =============================================================================
+ * CONTACTBOXITEM.ASTRO - SOCIAL/CONTACT LINK ITEM
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Renders a single social or contact link as an interactive row with
+ *   arrow indicator. Used in the ContactSection to display available
+ *   platforms for connecting with Salem.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Displays individual social media/professional links
+ *   - Common platforms: GitHub, LinkedIn, Instagram, Twitter/X
+ *   - Entire row is clickable with hover animation
+ *
+ * PROPS:
+ *   - contact: Object { name: string, link: string }
+ *     - name: Display label (e.g., "GitHub")
+ *     - link: URL to the profile/page
+ *
+ * FEATURES:
+ *   - Platform name displayed as clickable text
+ *   - Arrow SVG icon animates in on hover
+ *   - Border animates on hover (transparent → black)
+ *
+ * HOVER STATES:
+ *   - Text color: text-slate-500 → text-black
+ *   - Border: transparent → border-b-2 (black)
+ *   - Font weight: normal → semibold
+ *   - Arrow SVG: hidden → block
+ *
+ * MODIFICATION NOTES:
+ *   - To change arrow icon: replace the SVG element
+ *   - To add email link: use mailto: prefix (e.g., link: 'mailto:salem@example.com')
+ *   - To add phone: similarly use tel: prefix
+ *   - To change hover colors: modify text-slate-500 and hover:text-black
+ */
+
 const { contact } = Astro.props;
 ---
 

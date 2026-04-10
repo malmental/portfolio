@@ -1,8 +1,37 @@
 ---
-const {
-  title = 'Aether Theme',
-  description = 'This is a sample description for aether astro theme',
-} = Astro.props;
+/**
+ * =============================================================================
+ * MAINLAYOUT.ASTRO - BASE HTML DOCUMENT SHELL
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Serves as the foundational HTML wrapper for ALL pages in the portfolio.
+ *   This layout is inherited by every page component and provides the base
+ *   document structure, meta tags, font loading, and global styles.
+ *
+ * PORTFOLIO USE CASE:
+ *   - This file is rarely modified directly
+ *   - Instead, individual pages pass their own title/description via props
+ *   - The Navbar and Footer are NOT included here; they're imported per-page
+ *     to allow flexibility in placement and behavior
+ *
+ * KEY FEATURES:
+ *   1. Poppins font family (weights 100-900) loaded via @fontsource
+ *   2. Astro View Transitions support (configurable via isTransitionEnabled)
+ *   3. Global CSS imports (styles.css for base styling)
+ *   4. SEO meta tags (description, generator, sitemap)
+ *   5. Responsive viewport meta tag
+ *
+ * PROPS ACCEPTED:
+ *   - title (string): Page title, defaults to 'Aether Theme'
+ *   - description (string): Meta description, used for SEO
+ *
+ * MODIFICATION NOTES:
+ *   - To change the font: replace @fontsource imports and update styles.css
+ *   - To disable view transitions: set isTransitionEnabled = false in data.js
+ *   - To add global scripts: add <script> tags before closing </body>
+ */
+
 import '@fontsource/poppins/100.css';
 import '@fontsource/poppins/200.css';
 import '@fontsource/poppins/300.css';
@@ -15,6 +44,11 @@ import '@fontsource/poppins/900.css';
 import { isTransitionEnabled } from '../data';
 import '../styles/styles.css';
 import { ViewTransitions } from 'astro:transitions';
+
+const {
+  title = 'Aether Theme',
+  description = 'This is a sample description for aether astro theme',
+} = Astro.props;
 ---
 
 <html lang='en'>

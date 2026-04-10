@@ -1,4 +1,38 @@
 ---
+/**
+ * =============================================================================
+ * FOOTER.ASTRO - SITE FOOTER COMPONENT
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Bottom footer component displaying navigation links centered, a horizontal
+ *   rule separator, and copyright information with optional attribution text.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Consistent footer across all pages
+ *   - Provides secondary navigation access after scrolling through content
+ *   - Copyright year is dynamically generated via JavaScript
+ *
+ * KEY FEATURES:
+ *   1. Centered navigation links (mirrors primary nav but in footer context)
+ *   2. Horizontal rule separator
+ *   3. Copyright with dynamic year: new Date().getFullYear()
+ *   4. Conditional attribution "maintained by" text (configurable)
+ *
+ * PROPS:
+ *   - navLinks: Array<{ name: string, href: string }> - Links to display
+ *
+ * CONFIGURATION:
+ *   - showDeveloperText: Boolean from data.js controls attribution visibility
+ *   - Set to FALSE once theme is fully customized beyond original
+ *
+ * MODIFICATION NOTES:
+ *   - To change layout: modify flexbox classes in container divs
+ *   - To add more footer content (social icons, contact info): extend markup
+ *   - To remove copyright text: delete the <span> block entirely
+ *   - The 'z-30' class on mobile overlay ensures proper stacking context
+ */
+
 const { navLinks } = Astro.props;
 import { showDeveloperText } from '../data';
 ---

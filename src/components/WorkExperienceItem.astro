@@ -1,4 +1,42 @@
 ---
+/**
+ * =============================================================================
+ * WORKEXPERIENCEITEM.ASTRO - INDIVIDUAL EXPERIENCE ENTRY
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Renders a single work experience entry with company name, position title,
+ *   date range, and achievement bullet points. Part of the WorkExperienceBox
+ *   container.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Displays one professional experience entry
+ *   - Shows role, company, timeframe, and key achievements
+ *   - Hover state provides interactive feedback
+ *
+ * PROPS:
+ *   - workExperience: Object {
+ *       organisationName: string,
+ *       position: string,
+ *       date: string,
+ *       info: string[]
+ *     }
+ *
+ * LAYOUT:
+ *   - Header row: Company name + position (left), date (right)
+ *   - Bullet points: Achievements/responsibilities list below header
+ *
+ * HOVER STATES:
+ *   - Text color: text-slate-500 → text-black
+ *   - Border: transparent → border-b-2 (black)
+ *   - Date color: text-slate-600 → text-black
+ *
+ * MODIFICATION NOTES:
+ *   - To change bullet style: modify list-disc (currently disc/bullet)
+ *   - To add more fields: extend the workExperience object
+ *   - To change date position: reorder flex container contents
+ */
+
 const { workExperience } = Astro.props;
 ---
 
@@ -13,8 +51,7 @@ const { workExperience } = Astro.props;
       >
     </div>
     <span class='font-light text-sm text-slate-600 group-hover:text-black'
-      >{workExperience.date}</span
-    >
+      >{workExperience.date}</span>
   </div>
   <ul class='mt-1 p-2 ml-3 list-disc'>
     {workExperience.info.map((info) => <li>{info}</li>)}

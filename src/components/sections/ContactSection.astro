@@ -1,4 +1,43 @@
 ---
+/**
+ * =============================================================================
+ * CONTACTSECTION.ASTRO - CONTACT / SOCIAL LINKS SECTION
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Section inviting visitors to connect. Displays contact description text
+ *   and a vertical list of social/professional link items (GitHub, LinkedIn,
+ *   Instagram, X/Twitter, etc.).
+ *
+ * PORTFOLIO USE CASE:
+ *   - Primary call-to-action for building professional connections
+ *   - Clean list format allows easy scanning of available contact channels
+ *   - "Let's Connect" heading uses inviting, action-oriented language
+ *
+ * LAYOUT STRUCTURE:
+ *   - Left/Top (60%): "Let's Connect" heading + contact description text
+ *   - Right/Bottom (30%): "Contact Me" heading + social link items
+ *   - Anchor ID: 'contact' enables navigation from navbar
+ *
+ * SUB-COMPONENTS:
+ *   - Section: Wrapper component
+ *   - ContactBoxItem: Individual social link with arrow hover effect
+ *
+ * DATA RECEIVED:
+ *   - contactText: Descriptive text inviting connection (string)
+ *   - contactOptions: Array of { name, link } objects
+ *
+ * LINK ITEMS:
+ *   - Each ContactBoxItem renders as a clickable row
+ *   - Arrow SVG icon appears on hover (group-hover:block)
+ *   - Border animates from transparent to black on hover
+ *
+ * MODIFICATION NOTES:
+ *   - To add email contact: add { name: 'Email', link: 'mailto:salem@example.com' }
+ *   - To change heading copy: modify "Let's Connect" and "Contact Me" text
+ *   - To reorder links: modify order in contactOptions array (data.js)
+ */
+
 import ContactBoxItem from '../ContactBoxItem.astro';
 import Section from '../Section.astro';
 const { contactText, contactOptions } = Astro.props;

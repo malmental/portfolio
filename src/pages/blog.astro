@@ -1,4 +1,37 @@
 ---
+/**
+ * =============================================================================
+ * BLOG.ASTRO - BLOG LISTING PAGE
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Dedicated page for displaying all blog posts in a grid layout. Unlike the
+ *   single-page portfolio sections, this is a standalone page accessible via
+ *   /blog route. Fetches all markdown files and renders them as cards.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Provides a browsable archive of your writing/content
+ *   - Accessible via "View All Posts" link in BlogSection or /blog URL
+ *   - Grid layout: 1 column on mobile, 3 columns on desktop
+ *   - Posts sorted by publication date (newest first)
+ *
+ * DATA FETCHING:
+ *   - Uses Astro.glob() to dynamically import all .md files from ./blogs/
+ *   - Sorting: Date.parse(b.frontmatter.pubDate) - Date.parse(a.frontmatter.pubDate)
+ *   - Display: All posts shown (no limit unlike BlogSection which shows 5)
+ *
+ * KEY COMPONENTS:
+ *   - Section.astro: Wrapper providing consistent section styling
+ *   - Navbar.jsx: React-based responsive navigation (client:load hydrated)
+ *   - Footer.astro: Site footer with navigation links
+ *   - BlogItem.astro: Individual post preview card
+ *
+ * MODIFICATION NOTES:
+ *   - To filter posts: add category/tag frontmatter and filter in allPosts
+ *   - To paginate: implement pagination logic if posts exceed desired count
+ *   - To change grid columns: modify grid-cols-1 md:grid-cols-3 classes
+ */
+
 import Section from '../components/Section.astro';
 import MainLayout from '../layouts/MainLayout.astro';
 import { navLinks } from '../data';

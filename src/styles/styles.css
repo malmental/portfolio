@@ -1,17 +1,50 @@
+/**
+ * =============================================================================
+ * STYLES.CSS - GLOBAL BASE STYLES
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Global CSS reset and base styling for the entire portfolio. This file
+ *   provides the foundational styles that all components and layouts
+ *   inherit from.
+ *
+ * CONTENT OVERVIEW:
+ *   1. CSS Reset (margin/padding reset, box-sizing)
+ *   2. Smooth scroll behavior
+ *   3. Poppins font family application
+ *   4. Custom scrollbar hiding (webkit, IE/Edge, Firefox)
+ *
+ * PORTFOLIO USE CASE:
+ *   - Imported by MainLayout.astro for all pages
+ *   - Sets baseline typography and reset
+ *   - Ensures consistent cross-browser styling
+ *
+ * MODIFICATION NOTES:
+ *   - To change font: modify font-family 'Poppins' to desired font
+ *   - To show scrollbar: remove the &::-webkit-scrollbar block entirely
+ *   - To change scroll behavior: modify html { scroll-behavior: auto/smooth }
+ *   - Additional global styles: can be added below the existing rules
+ */
+
+/* CSS Reset */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
+/* Smooth scroll for anchor navigation */
 html {
   scroll-behavior: smooth;
 }
 
+/* Poppins font family applied globally */
 body {
   font-family: 'Poppins', sans-serif;
 }
 
+/* Hide scrollbar across all browsers */
+/* Note: This hides scrollbar but maintains scrolling functionality */
 &::-webkit-scrollbar {
   display: none !important;
   -ms-overflow-style: none; /* IE and Edge */

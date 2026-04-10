@@ -1,4 +1,44 @@
 ---
+/**
+ * =============================================================================
+ * BLOGSECTION.ASTRO - WRITING/BLOG PREVIEW SECTION
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Section showcasing recent blog posts. Displays a descriptive text about
+ *   Salem's writing philosophy, a "View All Posts" link, and a sidebar listing
+ *   the 5 most recent blog posts with previews.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Central hub for Salem's written content/thought leadership
+ *   - Partial blog listing (5 recent) drives traffic to /blog for full archive
+ *   - "Writing" heading sets tone for the content type (vs typical "Blog")
+ *
+ * DATA FETCHING:
+ *   - Uses Astro.glob() to dynamically import all .md files from blogs/
+ *   - Sorts by pubDate descending (newest first)
+ *   - Slices to show only first 5 posts: allPosts.slice(0, 5)
+ *
+ * LAYOUT STRUCTURE:
+ *   - Left/Top (60%): "Writing" heading + descriptive text + "View All Posts" link
+ *   - Right/Bottom (30%): "Recent Blogs" heading + 5 most recent post items
+ *   - Anchor ID: 'blog' enables navigation from navbar
+ *
+ * SUB-COMPONENTS:
+ *   - Section: Wrapper component
+ *   - BlogItem: Individual post preview card (title, truncated desc, date)
+ *
+ * KEY FEATURES:
+ *   - "View All Posts" link navigates to /blog page
+ *   - Arrow icon SVG appears on hover (group-hover:block)
+ *   - Posts show truncated description (50 chars max)
+ *
+ * MODIFICATION NOTES:
+ *   - To show more/fewer posts: change slice(0, 5) to desired number
+ *   - To filter by category: add frontmatter category and filter in allPosts
+ *   - To change "Writing" heading: modify h3 text content
+ */
+
 import BlogItem from '../BlogItem.astro';
 import Section from '../Section.astro';
 const { writingText } = Astro.props;

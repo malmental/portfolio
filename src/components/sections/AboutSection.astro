@@ -1,4 +1,48 @@
 ---
+/**
+ * =============================================================================
+ * ABOUTSECTION.ASTRO - ABOUT ME + SKILLS + EXPERIENCE SECTION
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   The "About" section displaying extended biography, technical skills as
+ *   pill badges, and professional work experience. Layout mirrors MainSection:
+ *   biography/skills on left/top, work experience sidebar on right/bottom.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Provides detailed background on Salem's skills and experience
+ *   - Skills displayed as rounded badges for quick scanning
+ *   - Work experience shows career progression with bullet achievements
+ *
+ * LAYOUT STRUCTURE:
+ *   - Left/Top (60%): "About Me" heading + bio + "Skills" heading + skill badges
+ *   - Right/Bottom (30%): "Work Experience" heading + experience entries
+ *   - Anchor ID: 'about' enables navigation from navbar
+ *
+ * SUB-COMPONENTS:
+ *   - Section: Wrapper component
+ *   - SkillsBox: Container rendering individual skill badges
+ *   - WorkExperienceBox: Container rendering experience entries
+ *
+ * DATA RECEIVED:
+ *   - aboutMe: Extended biography text (string)
+ *   - skills: Array of skill name strings
+ *   - workExperiences: Array of experience objects
+ *
+ * SKILLS DISPLAY:
+ *   - SkillsBox renders skills as rounded pill badges
+ *   - Each badge: SkillItem component with bg-slate-100, centered text
+ *
+ * WORK EXPERIENCE DISPLAY:
+ *   - WorkExperienceBox renders each experience as a collapsible entry
+ *   - Each entry shows: company name, position, date, bullet point achievements
+ *
+ * MODIFICATION NOTES:
+ *   - To reorder sections within: modify the div structure and flex direction
+ *   - To change skill badge style: modify SkillItem.astro
+ *   - To change experience layout: modify WorkExperienceItem.astro
+ */
+
 import Section from '../Section.astro';
 import SkillsBox from '../SkillsBox.astro';
 import WorkExperienceBox from '../WorkExperienceBox.astro';

@@ -1,4 +1,34 @@
 ---
+/**
+ * =============================================================================
+ * SECTION.ASTRO - REUSABLE SECTION WRAPPER COMPONENT
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Lightweight wrapper component that provides consistent section styling and
+ *   structure. Accepts optional CSS classes and an ID attribute for anchor
+ *   navigation (scroll-to-section).
+ *
+ * PORTFOLIO USE CASE:
+ *   - Used as the base wrapper for all page sections (Main, About, Blog, Contact)
+ *   - Provides background styling and full-width layout
+ *   - ID attribute enables smooth-scroll navigation from navbar links
+ *
+ * PROPS:
+ *   - styles: string (optional) - Additional Tailwind CSS classes
+ *   - ids: string (optional) - Section ID for anchor navigation (e.g., 'about')
+ *
+ * USAGE PATTERN:
+ *   <Section styles='custom-classes' ids='section-id'>
+ *     <!-- content -->
+ *   </Section>
+ *
+ * MODIFICATION NOTES:
+ *   - To change default background: modify bg-fixed or add bg-* classes
+ *   - This is a layout utility - rarely needs direct modification
+ *   - Consider this the "section baseline" - individual sections extend it
+ */
+
 const { styles, ids } = Astro.props;
 ---
 
