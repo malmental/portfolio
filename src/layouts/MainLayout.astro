@@ -57,10 +57,7 @@ const { title = "Salem.dev", description = "Portfolio of Salem - Developer" } =
     <title>{title}</title>
     {isTransitionEnabled && <ViewTransitions />}
     <script is:inline>
-      const savedTheme = localStorage.getItem('theme-mode');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const initialTheme = savedTheme || (prefersDark ? 'dark' : 'light');
-      document.documentElement.dataset.theme = initialTheme;
+      document.documentElement.dataset.theme = 'light';
     </script>
   </head>
   <body>
