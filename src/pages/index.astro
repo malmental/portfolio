@@ -37,10 +37,8 @@ import {
   myName,
   myBio,
   navLinks,
-  selectedProjects,
   aboutMe,
   skills,
-  workExperiences,
   writingText,
   contactText,
   contactOptions,
@@ -57,14 +55,12 @@ import ContactSection from '../components/sections/ContactSection.astro';
     navLinks={navLinks}
     myName={myName}
     myBio={myBio}
-    selectedProjects={selectedProjects}
   />
   <AboutSection
     aboutMe={aboutMe}
     skills={skills}
-    workExperiences={workExperiences}
   />
   <BlogSection writingText={writingText} />
   <ContactSection contactText={contactText} contactOptions={contactOptions} />
-  <Footer navLinks={navLinks} />
+  <!-- <Footer navLinks={navLinks} /> -->
 </MainLayout>

@@ -1,85 +1,76 @@
 ---
 /**
  * =============================================================================
- * ABOUTSECTION.ASTRO - ABOUT ME + SKILLS + EXPERIENCE SECTION
+ * ABOUTSECTION.ASTRO - ABOUT ME + SKILLS SECTION
  * =============================================================================
  *
  * PURPOSE:
- *   The "About" section displaying extended biography, technical skills as
- *   pill badges, and professional work experience. Layout mirrors MainSection:
- *   biography/skills on left/top, work experience sidebar on right/bottom.
+ *   The "About" section displaying extended biography and technical skills as
+ *   pill badges. Layout mirrors MainSection: biography on left/top, skills on right/bottom.
  *
  * PORTFOLIO USE CASE:
- *   - Provides detailed background on Salem's skills and experience
+ *   - Provides detailed background on Salem's skills
  *   - Skills displayed as rounded badges for quick scanning
- *   - Work experience shows career progression with bullet achievements
  *
  * LAYOUT STRUCTURE:
  *   - Left/Top (60%): "About Me" heading + bio + "Skills" heading + skill badges
- *   - Right/Bottom (30%): "Work Experience" heading + experience entries
  *   - Anchor ID: 'about' enables navigation from navbar
  *
  * SUB-COMPONENTS:
  *   - Section: Wrapper component
  *   - SkillsBox: Container rendering individual skill badges
- *   - WorkExperienceBox: Container rendering experience entries
  *
  * DATA RECEIVED:
  *   - aboutMe: Extended biography text (string)
  *   - skills: Array of skill name strings
- *   - workExperiences: Array of experience objects
  *
  * SKILLS DISPLAY:
  *   - SkillsBox renders skills as rounded pill badges
  *   - Each badge: SkillItem component with bg-slate-100, centered text
  *
- * WORK EXPERIENCE DISPLAY:
- *   - WorkExperienceBox renders each experience as a collapsible entry
- *   - Each entry shows: company name, position, date, bullet point achievements
- *
  * MODIFICATION NOTES:
  *   - To reorder sections within: modify the div structure and flex direction
  *   - To change skill badge style: modify SkillItem.astro
- *   - To change experience layout: modify WorkExperienceItem.astro
  */
 
 import Section from '../Section.astro';
 import SkillsBox from '../SkillsBox.astro';
-import WorkExperienceBox from '../WorkExperienceBox.astro';
-const { aboutMe, skills, workExperiences } = Astro.props;
+import AsciiCanvas from '../AsciiCanvas.astro';
+const { aboutMe, skills } = Astro.props;
 ---
 
-<Section styles='p-1 ' ids='about'>
+<Section styles='p-1 overflow-hidden' ids='about'>
   <div
-    class='flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
+    class='relative flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
   >
-    <div class='box introduction w-[100%] md:w-[60%] p-5'>
+    <div class='box introduction relative z-10 w-[100%] md:w-[50%] md:ml-auto p-5'>
       <div class='box-text'>
         <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem]'
+          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem] text-right animate-on-scroll'
         >
           About Me
         </h3>
         <p
-          class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify'
+          class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-right animate-on-scroll'
         >
           {aboutMe}
         </p>
         <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] ml-2 md:ml-4'
+          class='leading-[4rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] text-right animate-on-scroll w-full md:w-[50%] ml-auto'
         >
           Skills
         </h3>
         <SkillsBox skills={skills} />
       </div>
     </div>
-    <div
-      class='info-box w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
-    >
-      <h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
-        Work Experience
-      </h3>
-      <WorkExperienceBox workExperiences={workExperiences} />
+    <div class='hidden md:flex absolute left-[4%] top-[10rem] lg:left-[5%] lg:top-[12rem] xl:left-[6%] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
+      <AsciiCanvas
+        gifSources={['/gif/Cube-shape animation-3.gif']}
+        desktopColumns={56}
+        desktopWidth='min(100%, 42rem)'
+        desktopMinHeight='30rem'
+        desktopFontSize='clamp(0.52rem, 0.82vw, 0.74rem)'
+      />
     </div>
   </div>
 </Section>
