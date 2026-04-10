@@ -37,6 +37,6 @@ import SkillItem from './SkillItem.astro';
 const { skills = [] } = Astro.props;
 ---
 
-<div class='w-full md:w-[80%] flex gap-3 mt-2 mb-2 flex-wrap'>
+<div class='w-full md:w-[60%] ml-auto flex gap-6 flex-wrap justify-end'>
   {skills.map((skill) => <SkillItem skill={skill} />)}
 </div>

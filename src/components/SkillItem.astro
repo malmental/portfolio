@@ -33,7 +33,7 @@ const { skill } = Astro.props;
 ---
 
 <div
-  class='rounded-full p-2 md:p-3 bg-slate-100 mx-2 min-w-[60px] flex items-center justify-center'
+  class='rounded-full p-2 md:p-3 bg-gray-200 hover:bg-gray-300 mx-2 min-w-[60px] flex items-center justify-center transition-colors duration-200'
 >
-  <span class='font-semibold'>{skill}</span>
+  <span class='font-semibold skill-text'>{skill}</span>
 </div>
