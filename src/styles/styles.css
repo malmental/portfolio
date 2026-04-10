@@ -11,8 +11,10 @@
  * CONTENT OVERVIEW:
  *   1. CSS Reset (margin/padding reset, box-sizing)
  *   2. Smooth scroll behavior
- *   3. Poppins font family application
+ *   3. Google Sans Code font family application
  *   4. Custom scrollbar hiding (webkit, IE/Edge, Firefox)
+ *   5. Scroll animations system
+ *   6. Dark/Light theme toggle
  *
  * PORTFOLIO USE CASE:
  *   - Imported by MainLayout.astro for all pages
@@ -20,33 +22,161 @@
  *   - Ensures consistent cross-browser styling
  *
  * MODIFICATION NOTES:
- *   - To change font: modify font-family 'Poppins' to desired font
- *   - To show scrollbar: remove the &::-webkit-scrollbar block entirely
- *   - To change scroll behavior: modify html { scroll-behavior: auto/smooth }
- *   - Additional global styles: can be added below the existing rules
+ *   - To change font: modify font-family
+ *   - To show scrollbar: remove the &::-webkit-scrollbar block
+ *   - Additional global styles: can be added below
  */
 
-/* CSS Reset */
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: 'Google Sans Code', monospace;
 }
 
-/* Smooth scroll for anchor navigation */
 html {
   scroll-behavior: smooth;
 }
 
-/* Poppins font family applied globally */
+html,
 body {
-  font-family: 'Poppins', sans-serif;
+  min-height: 100%;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
 }
 
-/* Hide scrollbar across all browsers */
-/* Note: This hides scrollbar but maintains scrolling functionality */
+body {
+  color: #312c24;
+  min-height: 100vh;
+  background: transparent;
+  position: relative;
+  transition: background-color 0.35s ease, color 0.35s ease;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-color: #d6e5f0;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.15) 0, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.25), transparent 30%);
+  background-size: 10px 10px, 100% 100%;
+  background-attachment: fixed;
+  transition: filter 0.35s ease, background-color 0.35s ease;
+}
+
+.site-shell {
+  position: relative;
+  z-index: 1;
+  transition: filter 0.35s ease;
+}
+
+/* Dark Mode - Invert Filter */
+html[data-theme='dark'] body {
+  background-color: #0e141b;
+}
+
+html[data-theme='dark'] body::before {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+html[data-theme='dark'] .site-shell {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Exclude videos and images from inversion */
+html[data-theme='dark'] video,
+html[data-theme='dark'] img,
+html[data-theme='dark'] canvas {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Keep screenshot border white in dark mode */
+html[data-theme='dark'] .screenshot-link {
+  filter: invert(1) hue-rotate(180deg);
+}
+html[data-theme='dark'] .screenshot-link img {
+  filter: none;
+}
+
+/* Theme Toggle Button */
+.theme-toggle {
+  position: fixed;
+  top: 1.25rem;
+  right: 1.25rem;
+  z-index: 9999;
+  background: transparent;
+  color: #312c24;
+  padding: 0.55rem;
+  font: inherit;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: translateY(-1px);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid #312c24;
+  outline-offset: 3px;
+}
+
+html[data-theme='dark'] .theme-toggle {
+  color: #f3efe8;
+}
+
+html[data-theme='dark'] .theme-icon svg {
+  color: #f5f5f5;
+}
+
+.theme-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-icon svg {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+/* Hide scrollbar */
 &::-webkit-scrollbar {
   display: none !important;
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* =============================================================================
+ * SCROLL ANIMATIONS
+ * =============================================================================
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+.animate-on-scroll.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-container .animate-on-scroll:nth-child(1) { transition-delay: 0ms; }
+.stagger-container .animate-on-scroll:nth-child(2) { transition-delay: 100ms; }
+.stagger-container .animate-on-scroll:nth-child(3) { transition-delay: 200ms; }
+.stagger-container .animate-on-scroll:nth-child(4) { transition-delay: 300ms; }
+.stagger-container .animate-on-scroll:nth-child(5) { transition-delay: 400ms; }
+.stagger-container .animate-on-scroll:nth-child(6) { transition-delay: 500ms; }
+.stagger-container .animate-on-scroll:nth-child(7) { transition-delay: 600ms; }
+
+/* Skill tags */
+.skill-text {
+  color: #312c24 !important;
 }
