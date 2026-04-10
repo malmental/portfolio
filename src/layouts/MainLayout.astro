@@ -57,6 +57,7 @@ const { title = "Salem.dev", description = "Portfolio of Salem - Developer" } =
     <title>{title}</title>
     {isTransitionEnabled && <ViewTransitions />}
     <script is:inline>
+      localStorage.removeItem('theme-mode');
       document.documentElement.dataset.theme = 'light';
     </script>
   </head>
