@@ -1,5 +1,5 @@
 {
-  "name": "aether",
+  "name": "salem-portfolio",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
@@ -19,6 +19,8 @@
     "astro": "^4.16.5",
     "astro-icon": "^1.1.1",
     "framer-motion": "^11.11.9",
+    "p5": "^2.2.3",
+    "p5.asciify": "^0.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.14"
