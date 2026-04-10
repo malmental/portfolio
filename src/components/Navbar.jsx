@@ -60,8 +60,8 @@ export default function Navbar({ navLinks }) {
   return (
     <nav className='relative top-0 left-0 w-full'>
       <div className='flex justify-between items-center p-5'>
-        <a href='/' className='logo text-md font-bold'>
-          {navLogoText ? navLogoText : 'Aether.'}
+        <a href='/' className='logo text-4xl md:text-5xl font-bold text-current'>
+          {navLogoText ? navLogoText : 'Ⱦ'}
         </a>
         <div className='links'>
           <ul className='hidden md:flex items-center gap-3'>
