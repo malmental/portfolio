@@ -42,7 +42,7 @@ import AsciiCanvas from '../AsciiCanvas.astro';
 const { navLinks, myName, myBio } = Astro.props;
 ---
 
-<Section styles='p-1 overflow-hidden'>
+<Section styles='p-8 md:p-16 overflow-hidden'>
   <Navbar navLinks={[]} client:load />
   <div
     class='relative mt-[3rem] md:mt-3 flex flex-col md:flex-row basis-0 gap-8 md:justify-between md:gap-0 items-center w-full min-h-[80vh] md:min-h-[88vh]'

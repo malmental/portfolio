@@ -50,7 +50,7 @@ export const myName = 'Salem, developer';
  * - Format: String (typically your name or brand identifier)
  * - Portfolio Use Case: Could be 'Salem', 'Slem', or your creative alias
  */
-export const navLogoText = 'ȿ';
+export const navLogoText = '{}';
 
 // =============================================================================
 // 3. NAVIGATION
@@ -81,7 +81,7 @@ export const navLinks = [
  * - Portfolio Use Case: Write a compelling 2-3 sentence introduction that
  *   captures your artistic dev approach and current focus
  */
-export const myBio = `I am a passionate Fullstack developer. I like to construct cross-platform software and I'm huge IA enthusiast. Always contribuiting for plus collabs and team growth.`;
+export const myBio = `A passionate Fullstack developer. I like to construct cross-platform software and I'm huge IA enthusiast. Always contribuiting for plus collabs and team growth.`;
 
 // =============================================================================
 // 5. ABOUT SECTION CONTENT (AboutSection)
@@ -108,7 +108,7 @@ export const aboutMe =
  * - Portfolio Use Case: Set the tone for your blog - could be philosophical,
  *   technical, or artistically phrased like the current example
  */
-export const writingText = `I typically keep my words few, but when I do pen them, it's a glimpse into my passions and my adventure through the digital landscape.`;
+export const writingText = `I'm currently studying at the IT Academy at Barcelona Activa. Here's a quick shot of my latest webb appliction, an Incident Manager with tags, nested comments and filter search for statisics.`;
 
 // =============================================================================
 // 7. CONTACT SECTION CONTENT (ContactSection)
@@ -134,17 +134,15 @@ export const contactText = `Based in Barcelona, do not hesitate to contact me if
  * - Note: Order matters - most important/recent should be first
  */
 export const skills = [
-  'HTML',
-  'CSS',
-  'JavaScript',
-  'React',
   'Laravel',
+  'API REST',
   'PHP',
-  'MongoDB',
-  'Git',
-  'GitHub',
-  'Astrojs',
-  'TailwindCSS',
+  'React',
+  'Tailwind CSS',
+  'IA',
+  'MySQL',
+  'GitFlow',
+  'LLM',
 ];
 
 // =============================================================================
