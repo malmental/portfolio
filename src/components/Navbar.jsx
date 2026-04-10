@@ -60,9 +60,9 @@ export default function Navbar({ navLinks }) {
   return (
     <nav className='relative top-0 left-0 w-full'>
       <div className='flex justify-between items-center p-5'>
-        <a href='/' className='logo text-4xl md:text-5xl font-bold text-current'>
+        <span className='logo text-2xl md:text-3xl font-bold text-current'>
           {navLogoText ? navLogoText : 'Ⱦ'}
-        </a>
+        </span>
         <div className='links'>
           <ul className='hidden md:flex items-center gap-3'>
             {navLinks.map((link) => (
