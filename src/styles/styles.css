@@ -41,7 +41,6 @@ html {
 html,
 body {
   min-height: 100%;
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
@@ -51,7 +50,6 @@ body {
   background: transparent;
   position: relative;
   transition: background-color 0.35s ease, color 0.35s ease;
-  overflow-x: hidden;
 }
 
 body::before {
