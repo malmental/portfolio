@@ -73,14 +73,23 @@ const { contactText } = Astro.props;
     <div
       class='info-box relative z-10 w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
     >
-      {/*}<h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
-        Contact Me
-      </h3>*/}
       <div class='stagger-container flex flex-col p-1'>
         <ContactBoxItem contact={{ name: 'Email', link: 'mailto:orlandorojasoyarzun@gmail.com' }} icon={emailIcon} />
         <ContactBoxItem contact={{ name: 'WhatsApp', link: 'https://wa.me/34634653926' }} icon={whatsappIcon} />
         <ContactBoxItem contact={{ name: 'GitHub', link: 'https://github.com/malmental' }} icon={githubIcon} />
         <ContactBoxItem contact={{ name: 'LinkedIn', link: 'https://www.linkedin.com/in/orlando-rojas-oyarz%C3%BAn/' }} icon={linkedinIcon} />
+      </div>
+      <div class='md:hidden mt-1 animate-on-scroll relative'>
+        <div class='absolute right-8 top-0'>
+          <AsciiCanvas
+            gifSources={['/gif/Cube-shape-animation.gif']}
+            desktopColumns={44}
+            desktopWidth='90%'
+            desktopMinHeight='17rem'
+            desktopFontSize='clamp(0.6rem, 2.5vw, 0.82rem)'
+          />
+        </div>
+        <div class='h-[17rem]'></div>
       </div>
     </div>
     <div class='hidden md:flex absolute md:right-[-5rem] md:bottom-[-10rem] lg:right-[-3rem] lg:bottom-[-13rem] xl:right-0 px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
@@ -94,3 +103,12 @@ const { contactText } = Astro.props;
     </div>
   </div>
 </Section>
+
+<style>
+  @media (max-width: 767px) {
+    .md-mobile-right {
+      margin-left: calc(40% + 1rem) !important;
+      margin-right: 0 !important;
+    }
+  }
+</style>

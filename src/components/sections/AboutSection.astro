@@ -26,17 +26,17 @@ const { aboutMe, skills } = Astro.props;
         Skills
       </h3>
       <SkillsBox skills={skills} />
-      <div class='w-full md:hidden mt-8 animate-on-scroll'>
+      <div class='w-full md:hidden mt-8 flex justify-center animate-on-scroll'>
         <AsciiCanvas
           gifSources={['/gif/Cube-shape animation-3.gif']}
-          desktopColumns={38}
-          desktopWidth='min(100%, 36rem)'
-          desktopMinHeight='11rem'
-          desktopFontSize='clamp(0.3rem, 1.4vw, 0.44rem)'
+          desktopColumns={48}
+          desktopWidth='80%'
+          desktopMinHeight='14rem'
+          desktopFontSize='clamp(0.52rem, 2.2vw, 0.76rem)'
         />
       </div>
     </div>
-    <div class='hidden md:flex absolute left-[4%] top-[10rem] lg:left-[5%] lg:top-[12rem] xl:left-[6%] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
+    <div class='hidden md:flex absolute left-[100%] top-[10rem] lg:left-[5%] lg:top-[12rem] xl:left-[6%] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
       <AsciiCanvas
         gifSources={['/gif/Cube-shape animation-3.gif']}
         desktopColumns={56}
