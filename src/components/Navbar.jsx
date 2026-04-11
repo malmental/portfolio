@@ -59,69 +59,11 @@ export default function Navbar({ navLinks }) {
   };
   return (
     <nav className='relative top-0 left-0 w-full'>
-      <div className='flex justify-between items-center p-5'>
+      <div className='flex items-center p-5'>
         <span className='logo text-2xl md:text-3xl font-bold text-current'>
           {navLogoText ? navLogoText : 'Ⱦ'}
         </span>
-        <div className='links'>
-          <ul className='hidden md:flex items-center gap-3'>
-            {navLinks.map((link) => (
-              <li key={link.name} className={MenuLinkStyles}>
-                <a href={`${link.href}`}>{link.name}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <motion.div
-          className={`flex flex-col md:hidden gap-[3.5px] cursor-pointer z-50 ${
-            isToggled ? 'fixed top-6 right-5' : ''
-          }`}
-          onClick={() => setIsToggled((prev) => !prev)}
-        >
-          <motion.span
-            animate={{
-              rotate: isToggled ? 45 : 0,
-              translateY: isToggled ? 7 : 0,
-              width: isToggled ? 30 : 30,
-            }}
-            className='w-[30px] h-[2px] bg-black'
-          />
-          <motion.span
-            animate={{ opacity: isToggled ? 0 : 1, width: isToggled ? 0 : 25 }}
-            className='w-[20px] h-[2px] bg-black'
-          />
-          <motion.span
-            animate={{
-              rotate: isToggled ? -45 : 0,
-              translateY: isToggled ? -5 : 0,
-              width: isToggled ? 30 : 15,
-            }}
-            className='w-[15px] h-[2px] bg-black'
-          />
-        </motion.div>
       </div>
-      {isToggled && (
-        <motion.div className='md:hidden fixed top-0 left-0 w-screen h-screen flex flex-col justify-center items-center z-30 bg-white'>
-          <motion.ul
-            className='flex md:hidden flex-col items-center gap-3'
-            variants={container}
-            initial='hidden'
-            animate='show'
-          >
-            {navLinks.map((link) => (
-              <motion.li variants={item} key={link.name}>
-                <a
-                  href={link.href}
-                  className={subMenuLinkStyles}
-                  onClick={() => setIsToggled(false)}
-                >
-                  {link.name}
-                </a>
-              </motion.li>
-            ))}
-          </motion.ul>
-        </motion.div>
-      )}
     </nav>
   );
 }

@@ -1,41 +1,4 @@
 ---
-/**
- * =============================================================================
- * MAINSECTION.ASTRO - HERO PRESENTATION SECTION
- * =============================================================================
- *
- * PURPOSE:
- *   The hero/introductory section of the portfolio homepage. Displays the
- *   portfolio owner's name as a large headline and a biography paragraph.
- *   Layout: side-by-side on desktop, stacked on mobile.
- *
- * PORTFOLIO USE CASE:
- *   - This is the FIRST thing visitors see - your visual introduction
- *   - The large typography with the name creates immediate identity
- *
- * LAYOUT STRUCTURE:
- *   - Left/Top: Name headline + bio paragraph
- *   - Responsive: stacks vertically on mobile, horizontal split on desktop
- *
- * SUB-COMPONENTS:
- *   - Navbar: React component for responsive navigation
- *   - Section: Wrapper providing consistent section styling
- *
- * DATA RECEIVED:
- *   - navLinks: Array of navigation link objects
- *   - myName: Portfolio owner name (string)
- *   - myBio: Introduction/bio paragraph (string)
- *
- * TYPOGRAPHY:
- *   - Name: 4rem mobile → 7rem XL desktop (bold, leading tight)
- *   - Bio: 1rem mobile → 1.5rem desktop (text-slate-700, text-justify)
- *
- * MODIFICATION NOTES:
- *   - To change hero background: modify Section wrapper classes
- *   - To adjust layout proportions: modify w-[60%] and w-[30%] percentages
- *   - To reorder: currently name/bio left (swap container order)
- */
-
 import Navbar from '../Navbar';
 import Section from '../Section.astro';
 import AsciiCanvas from '../AsciiCanvas.astro';
@@ -47,29 +10,26 @@ const { navLinks, myName, myBio } = Astro.props;
   <div
     class='relative mt-[3rem] md:mt-3 flex flex-col md:flex-row basis-0 gap-10 md:justify-between md:gap-0 items-start md:items-center w-full min-h-[80vh] md:min-h-[88vh]'
   >
-    <div class='introduction relative z-10 w-full md:w-[50%] px-1 py-3 md:p-5'>
-      <div class='intro-text-box'>
-        <h2
-          class='intro-text max-w-[10ch] leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold tracking-tight md:tracking-wider text-[3.1rem] sm:text-[3.8rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] animate-on-scroll'
-        >
-          I'm {myName}.
-        </h2>
-      </div>
+    <div class='introduction relative z-10 w-full md:w-[50%] px-4 md:px-5'>
+      <h2
+        class='intro-text max-w-[10ch] leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold tracking-tight md:tracking-wider text-[3.1rem] sm:text-[3.8rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] animate-on-scroll'
+      >
+        I'm {myName}.
+      </h2>
       <p
         class='intro-bio mt-5 md:mt-8 mb-2 md:mb-5 max-w-[34rem] leading-7 md:leading-7 text-base sm:text-lg md:text-2xl text-slate-700 text-left md:text-justify text-balance animate-on-scroll'
       >
         {myBio}
       </p>
-    </div>
-    <div class='w-full max-w-[34rem] mx-auto md:hidden animate-on-scroll'>
-      <AsciiCanvas
-        gifSources={['/gif/Cube-shape animation-2.gif']}
-        desktopColumns={40}
-        desktopWidth='100%'
-        desktopMinHeight='16rem'
-        desktopFontSize='clamp(0.34rem, 1.7vw, 0.5rem)'
-        className='px-0'
-      />
+      <div class='w-full md:hidden mt-8 animate-on-scroll'>
+        <AsciiCanvas
+          gifSources={['/gif/Cube-shape animation-2.gif']}
+          desktopColumns={40}
+          desktopWidth='min(100%, 34rem)'
+          desktopMinHeight='12rem'
+          desktopFontSize='clamp(0.32rem, 1.5vw, 0.48rem)'
+        />
+      </div>
     </div>
     <div class='hidden md:flex absolute right-[2%] top-[8rem] lg:right-[3%] lg:top-[9rem] xl:right-[4%] xl:top-[10rem] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-95'>
       <AsciiCanvas
@@ -80,5 +40,5 @@ const { navLinks, myName, myBio } = Astro.props;
         desktopFontSize='clamp(0.62rem, 1vw, 0.88rem)'
       />
     </div>
-  </div></Section
->
+  </div>
+</Section>

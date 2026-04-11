@@ -1,38 +1,4 @@
 ---
-/**
- * =============================================================================
- * ABOUTSECTION.ASTRO - ABOUT ME + SKILLS SECTION
- * =============================================================================
- *
- * PURPOSE:
- *   The "About" section displaying extended biography and technical skills as
- *   pill badges. Layout mirrors MainSection: biography on left/top, skills on right/bottom.
- *
- * PORTFOLIO USE CASE:
- *   - Provides detailed background on Salem's skills
- *   - Skills displayed as rounded badges for quick scanning
- *
- * LAYOUT STRUCTURE:
- *   - Left/Top (60%): "About Me" heading + bio + "Skills" heading + skill badges
- *   - Anchor ID: 'about' enables navigation from navbar
- *
- * SUB-COMPONENTS:
- *   - Section: Wrapper component
- *   - SkillsBox: Container rendering individual skill badges
- *
- * DATA RECEIVED:
- *   - aboutMe: Extended biography text (string)
- *   - skills: Array of skill name strings
- *
- * SKILLS DISPLAY:
- *   - SkillsBox renders skills as rounded pill badges
- *   - Each badge: SkillItem component with bg-slate-100, centered text
- *
- * MODIFICATION NOTES:
- *   - To reorder sections within: modify the div structure and flex direction
- *   - To change skill badge style: modify SkillItem.astro
- */
-
 import Section from '../Section.astro';
 import SkillsBox from '../SkillsBox.astro';
 import AsciiCanvas from '../AsciiCanvas.astro';
@@ -43,35 +9,32 @@ const { aboutMe, skills } = Astro.props;
   <div
     class='relative flex flex-col md:flex-row basis-0 gap-10 md:justify-between md:gap-[5rem] items-start md:items-center w-full min-h-[85vh]'
   >
-    <div class='box introduction relative z-10 w-full md:w-[50%] md:ml-auto px-1 py-3 md:p-5'>
-      <div class='box-text stagger-container'>
-        <h3
-          class='max-w-[10ch] md:max-w-none leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold text-[3.1rem] sm:text-[3.8rem] md:text-[6rem] text-left md:text-right animate-on-scroll'
-        >
-          About Me
-        </h3>
-        <p
-          class='intro-bio mt-5 md:mt-8 mb-6 max-w-[36rem] ml-0 md:ml-auto leading-7 md:leading-7 text-base sm:text-lg md:text-2xl text-slate-700 text-left md:text-right text-balance animate-on-scroll'
-        >
-          {aboutMe}
-        </p>
-        <h3
-          class='leading-[2.6rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] text-left md:text-right animate-on-scroll w-full md:w-[50%] ml-0 md:ml-auto'
-        >
-          Skills
-        </h3>
-        <SkillsBox skills={skills} />
+    <div class='box introduction relative z-10 w-full md:w-[50%] md:ml-auto px-4 md:p-5'>
+      <h3
+        class='max-w-[10ch] md:max-w-none leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold text-[3.1rem] sm:text-[3.8rem] md:text-[6rem] text-left md:text-right animate-on-scroll'
+      >
+        About Me
+      </h3>
+      <p
+        class='intro-bio mt-5 md:mt-8 mb-6 max-w-[36rem] leading-7 md:leading-7 text-base sm:text-lg md:text-2xl text-slate-700 text-left md:text-right text-balance animate-on-scroll'
+      >
+        {aboutMe}
+      </p>
+      <h3
+        class='leading-[2.6rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] text-left md:text-right animate-on-scroll w-full md:w-[50%]'
+      >
+        Skills
+      </h3>
+      <SkillsBox skills={skills} />
+      <div class='w-full md:hidden mt-8 animate-on-scroll'>
+        <AsciiCanvas
+          gifSources={['/gif/Cube-shape animation-3.gif']}
+          desktopColumns={38}
+          desktopWidth='min(100%, 36rem)'
+          desktopMinHeight='11rem'
+          desktopFontSize='clamp(0.3rem, 1.4vw, 0.44rem)'
+        />
       </div>
-    </div>
-    <div class='w-full max-w-[36rem] mx-auto md:hidden animate-on-scroll'>
-      <AsciiCanvas
-        gifSources={['/gif/Cube-shape animation-3.gif']}
-        desktopColumns={38}
-        desktopWidth='100%'
-        desktopMinHeight='15rem'
-        desktopFontSize='clamp(0.32rem, 1.55vw, 0.46rem)'
-        className='px-0'
-      />
     </div>
     <div class='hidden md:flex absolute left-[4%] top-[10rem] lg:left-[5%] lg:top-[12rem] xl:left-[6%] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
       <AsciiCanvas
