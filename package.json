@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
+    "prebuild": "node scripts/extract-ascii-frames.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
@@ -24,5 +25,8 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "tailwindcss": "^3.4.14"
+  },
+  "devDependencies": {
+    "omggif": "^1.0.10"
   }
 }
