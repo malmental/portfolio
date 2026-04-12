@@ -21,14 +21,16 @@ const { navLinks, myName, myBio } = Astro.props;
       >
         {myBio}
       </p>
-      <div class='w-full md:hidden mt-6 animate-on-scroll'>
-        <AsciiCanvas
-          gifSources={['/gif/Cube-shape animation-2.gif']}
-          desktopColumns={34}
-          desktopWidth='100%'
-          desktopMinHeight='14rem'
-          desktopFontSize='clamp(0.5rem, 2.8vw, 0.8rem)'
-        />
+      <div class='w-full md:hidden mt-6 animate-on-scroll flex justify-center'>
+        <div class='w-[85vw] max-w-[20rem]'>
+          <AsciiCanvas
+            gifSources={['/gif/Cube-shape animation-2.gif']}
+            desktopColumns={34}
+            desktopWidth='100%'
+            desktopMinHeight='14rem'
+            desktopFontSize='clamp(0.5rem, 2.8vw, 0.8rem)'
+          />
+        </div>
       </div>
     </div>
     <div class='hidden md:flex absolute right-[2%] top-[8rem] lg:right-[3%] lg:top-[9rem] xl:right-[4%] xl:top-[10rem] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-95'>
