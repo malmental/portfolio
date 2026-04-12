@@ -179,13 +179,19 @@ const {
       // Load omggif library dynamically
       const loadOmggif = () =>
         new Promise((resolve, reject) => {
-          if (window.omggif) {
+          if (window.omggif && window.omggif.GIFReader) {
             resolve(window.omggif);
             return;
           }
           const script = document.createElement('script');
           script.src = 'https://cdn.jsdelivr.net/npm/omggif@1.0.10/omggif.js';
-          script.onload = () => resolve(window.omggif);
+          script.onload = () => {
+            if (window.omggif && window.omggif.GIFReader) {
+              resolve(window.omggif);
+            } else {
+              reject(new Error('omggif loaded but GIFReader not available'));
+            }
+          };
           script.onerror = () => reject(new Error('Failed to load omggif'));
           document.head.appendChild(script);
         });
@@ -199,6 +205,10 @@ const {
           return false;
         }
 
+        if (!omggif || !omggif.GIFReader) {
+          return false;
+        }
+
         try {
           const response = await fetch(sourcePath);
           if (!response.ok) return false;
@@ -209,9 +219,11 @@ const {
           const width = reader.width;
           const height = reader.height;
 
-          // Ensure canvas is large enough
-          hiddenCanvas.width = Math.max(hiddenCanvas.width, width);
-          hiddenCanvas.height = Math.max(hiddenCanvas.height, height);
+          // Create a dedicated canvas for GIF frames
+          const gifCanvas = document.createElement('canvas');
+          gifCanvas.width = width;
+          gifCanvas.height = height;
+          const gifCtx = gifCanvas.getContext('2d', { willReadFrequently: true });
 
           const frameCount = reader.numFrames();
           if (!frameCount) return false;
@@ -223,22 +235,23 @@ const {
               const frameData = new Uint8Array(width * height * 4);
               reader.decodeAndBlitFrameRGBA(i, frameData);
 
-              // Create temporary image from frame data
-              const tempCanvas = document.createElement('canvas');
-              tempCanvas.width = width;
-              tempCanvas.height = height;
-              const tempCtx = tempCanvas.getContext('2d');
-              const imageData = tempCtx.createImageData(width, height);
+              const imageData = gifCtx.createImageData(width, height);
               imageData.data.set(frameData);
-              tempCtx.putImageData(imageData, 0, 0);
+              gifCtx.putImageData(imageData, 0, 0);
 
               // Get frame delay (in ms)
               const frameInfo = reader.frameInfo(i);
-              const delay = frameInfo.delay || 100;
+              const delay = (frameInfo.delay && frameInfo.delay > 0) ? frameInfo.delay : 100;
+
+              // Clone the canvas for this frame to avoid mutation issues
+              const frameCanvas = document.createElement('canvas');
+              frameCanvas.width = width;
+              frameCanvas.height = height;
+              frameCanvas.getContext('2d').drawImage(gifCanvas, 0, 0);
 
               decodedFrames.push({
-                ascii: frameToAscii(tempCanvas, width, height),
-                duration: delay / 1000,
+                ascii: frameToAscii(frameCanvas, width, height),
+                duration: delay,
               });
             } catch {
               // Skip problematic frames
