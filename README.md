@@ -1,2 +1,1 @@
-Theme repo
-# Aether Astro Theme
+Repo to prepare mi portfolio

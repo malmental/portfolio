@@ -1,0 +1,32 @@
+---
+/**
+ * =============================================================================
+ * IMAGEITEM.ASTRO - IMAGE PREVIEW CARD
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Displays a single image preview with an optional caption below.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Showcases screenshots or static images
+ *   - Includes optional caption text
+ *   - Clean presentation with rounded corners
+ *
+ * PROPS:
+ *   - imageSrc: string (path to image file in /public/images/)
+ *   - alt: string (alt text for accessibility)
+ *   - caption: string (optional caption below the image)
+ */
+
+const { imageSrc, alt, caption } = Astro.props;
+---
+
+<figure class='animate-on-scroll flex flex-col gap-2'>
+  <img
+    src={imageSrc}
+    alt={alt}
+    class='w-full rounded-lg object-cover'
+    loading='lazy'
+  />
+  {caption && <figcaption class='text-sm text-slate-600 text-center'>{caption}</figcaption>}
+</figure>

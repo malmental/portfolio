@@ -1,3 +1,38 @@
+/**
+ * =============================================================================
+ * BLOG.CSS - BLOG POST TYPOGRAPHY SYSTEM
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Typography styles specifically designed for blog post content. This file
+ *   is imported by BlogLayout.astro and styles the Markdown-rendered content
+ *   within blog posts (headings, paragraphs, lists, code, quotes).
+ *
+ * CONTENT OVERVIEW:
+ *   1. Headings (h1-h4) with responsive font sizes
+ *   2. Paragraphs with line-height and spacing
+ *   3. Lists (ordered and unordered)
+ *   4. Links with hover underline
+ *   5. Blockquotes with left border and gray background
+ *   6. Code blocks with background and border
+ *   7. Responsive breakpoints for mobile
+ *
+ * PORTFOLIO USE CASE:
+ *   - Applied to .blog class container in BlogLayout
+ *   - Ensures consistent, readable typography in written content
+ *   - Responsive scaling for mobile devices
+ *
+ * CLASS SELECTOR:
+ *   - All styles target .blog class to scope them to blog content
+ *   - Prevents bleed into other parts of the portfolio
+ *
+ * MODIFICATION NOTES:
+ *   - To change heading colors: modify font-weight and add color classes
+ *   - To change link color: modify color: #2980b9 (currently blue)
+ *   - To adjust blockquote style: modify background and border colors
+ *   - To change code block style: modify background: #f8f8f8
+ */
+
 /* Headings */
 .blog h1 {
   font-size: 2.5em;

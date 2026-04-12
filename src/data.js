@@ -1,26 +1,68 @@
-export const isTransitionEnabled = true; // for enabling view transitions
+/**
+ * =============================================================================
+ * SALEM'S PORTFOLIO - CENTRALIZED CONTENT CONFIGURATION
+ * =============================================================================
+ *
+ * This file serves as the single source of truth for all portfolio content.
+ * Salem: Modify the values below to customize your portfolio. Each exported
+ * constant is documented with its purpose, expected format, and usage context.
+ *
+ * TABLE OF CONTENTS:
+ *   1. Global Settings
+ *   2. Personal Identity
+ *   3. Navigation
+ *   4. Hero Section Content
+ *   5. About Section Content
+ *   6. Blog/Writing Section Content
+ *   7. Contact Section Content
+ *   8. Skills & Expertise
+ *   9. Social/Contact Links
+ *   10. Footer Configuration
+ */
 
-export const myName = 'John Doe'; // For name in main intro text
+// =============================================================================
+// 1. GLOBAL SETTINGS
+// =============================================================================
 
-export const navLogoText = 'John Doe'; // navbar left-most logo text
-// bio for main section
+/**
+ * VIEW TRANSITIONS toggle
+ * - Enables/disables Astro's built-in page transition animations
+ * - Set to FALSE if you experience issues during development
+ * - Portfolio Use Case: Leave TRUE for smooth navigation between pages
+ */
+export const isTransitionEnabled = true;
 
-export const myBio = `A passionate web developer with a knack for creating dynamic and responsive web applications. With a background in computer science and a love for coding, I thrive on turning ideas into reality through technology.`;
+// =============================================================================
+// 2. PERSONAL IDENTITY
+// =============================================================================
 
-// about me text for about section
+/**
+ * PORTFOLIO OWNER NAME
+ * - Displayed prominently in the Hero Section (MainSection)
+ * - Format: String (your artistic/dev name or full name)
+ * - Example: 'Salem' or 'Salem Dev Studio'
+ */
+export const myName = 'Salem, developer';
 
-export const aboutMe =
-  'I specialize in front-end development with a focus on creating user-friendly interfaces. My skills include HTML, CSS, JavaScript, and frameworks like React and Vue.js. I also have experience in back-end development using Node.js and Express, making me a versatile full-stack developer.';
+/**
+ * NAVIGATION LOGO TEXT
+ * - Appears in the top-left corner of the Navbar
+ * - Format: String (typically your name or brand identifier)
+ * - Portfolio Use Case: Could be 'Salem', 'Slem', or your creative alias
+ */
+export const navLogoText = '{}';
 
-// A sub text for writing/blog section
-export const writingText = `I typically keep my words few, but when I do pen them, it’s a glimpse into my passions and my adventure through the digital landscape.`;
+// =============================================================================
+// 3. NAVIGATION
+// =============================================================================
 
-// A sub text for contact section
-
-export const contactText = `I’d love to hear from you! Whether you have questions, collaboration ideas, or just want to connect, feel free to reach out. I’m always open to engaging conversations and exploring new opportunities.`;
-
-// Links to put in the navigation bar as well as footer at bottom of the page
-
+/**
+ * NAVIGATION LINKS
+ * - Defines the navigation menu items shown in Navbar and Footer
+ * - Format: Array of objects { name: string, href: string }
+ * - Portfolio Use Case: Add/remove links as your portfolio sections grow
+ * - Note: The href '/#about' format enables smooth scroll to sections
+ */
 export const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/#about' },
@@ -28,62 +70,105 @@ export const navLinks = [
   { name: 'Contact', href: '/#contact' },
 ];
 
-// Selected projects (side box) for main section of page
+// =============================================================================
+// 4. HERO SECTION CONTENT (MainSection)
+// =============================================================================
 
-export const selectedProjects = [
-  { name: 'Project 1', link: '#' },
-  { name: 'Project 2', link: '#' },
-  { name: 'Project 3', link: '#' },
-  { name: 'Project 4', link: '#' },
-];
+/**
+ * HERO BIOGRAPHY
+ * - The introductory paragraph that appears below your name in the hero
+ * - Format: String (supports multi-line with backticks)
+ * - Portfolio Use Case: Write a compelling 2-3 sentence introduction that
+ *   captures your artistic dev approach and current focus
+ */
+export const myBio = `A passionate Fullstack developer. I like to construct cross-platform software and I'm huge IA enthusiast. Always contribuiting for plus collabs and team growth.`;
 
-// Skills section for about section of the page
+// =============================================================================
+// 5. ABOUT SECTION CONTENT (AboutSection)
+// =============================================================================
 
+/**
+ * EXTENDED BIOGRAPHY
+ * - Longer biography text displayed in the About section
+ * - Format: String (supports multi-line with backticks)
+ * - Portfolio Use Case: Share your background, interests, and what drives you
+ *   as an artistic developer
+ */
+export const aboutMe =
+  'I work mainly with Laravel, PHP and MySQL. I`m open for the best adaptive front framework according needs.';
+
+// =============================================================================
+// 6. BLOG/WRITING SECTION CONTENT (BlogSection)
+// =============================================================================
+
+/**
+ * WRITING SECTION SUBTEXT
+ * - Descriptive text that appears below the "Writing" heading
+ * - Format: String (supports multi-line with backticks)
+ * - Portfolio Use Case: Set the tone for your blog - could be philosophical,
+ *   technical, or artistically phrased like the current example
+ */
+export const writingText = `I'm currently studying at the IT Academy at Barcelona Activa. Here's a quick shot of my latest webb appliction, an Incident Manager with tags, nested comments and filter search for statisics.`;
+
+// =============================================================================
+// 7. CONTACT SECTION CONTENT (ContactSection)
+// =============================================================================
+
+/**
+ * CONTACT SECTION SUBTEXT
+ * - Introductory text before the social link buttons
+ * - Format: String (supports multi-line with backticks)
+ * - Portfolio Use Case: Invite visitors to connect, collaborate, or reach out
+ */
+export const contactText = `Based in Barcelona, do not hesitate to contact me if any inquier, collab idea or just simply conect and share knowledge, this would the best!.`;
+
+// =============================================================================
+// 8. SKILLS & EXPERTISE (SkillsBox in AboutSection)
+// =============================================================================
+
+/**
+ * TECHNICAL SKILLS LIST
+ * - Skills displayed as pill badges in the About section
+ * - Format: Array of strings
+ * - Portfolio Use Case: List technologies, tools, and creative skills
+ * - Note: Order matters - most important/recent should be first
+ */
 export const skills = [
-  'HTML',
-  'CSS',
-  'JavaScript',
+  'Laravel',
+  'API REST',
+  'PHP',
   'React',
-  'Express',
-  'Nodejs',
-  'MongoDB',
-  'Git',
-  'GitHub',
-  'Astrojs',
-  'TailwindCSS',
+  'Tailwind CSS',
+  'IA',
+  'MySQL',
+  'GitFlow',
+  'LLM',
 ];
 
-// work experience box for about section of the page
+// =============================================================================
+// 9. SOCIAL/CONTACT LINKS (ContactSection)
+// =============================================================================
 
-export const workExperiences = [
-  {
-    organisationName: 'company 1',
-    position: 'Intern',
-    date: '2022 - 2023',
-    info: ['I worked on this', 'I showed this skills'],
-  },
-  {
-    organisationName: 'company 2',
-    position: 'UI/UX Designer',
-    date: '2024 - present',
-    info: ['I worked on this', 'I showed this skills'],
-  },
-  {
-    organisationName: 'company 3',
-    position: 'React Developer',
-    date: '2022 - 2023',
-    info: ['I worked on this', 'I showed this skills'],
-  },
-];
-
-// contact box for contact section of the page
-
+/**
+ * CONTACT & SOCIAL MEDIA LINKS
+ * - Links displayed in the Contact section (GitHub, LinkedIn, etc.)
+ * - Format: Array of objects { name: string, link: string }
+ * - Portfolio Use Case: Point to your professional profiles and presence
+ * - Modification Note: Currently limited to 4 links displayed vertically;
+ *   consider adding an email link (mailto:) as an alternative
+ */
 export const contactOptions = [
-  { name: 'Github', link: 'https://github.com' },
-  { name: 'Instagram', link: 'https://instagram.com' },
-  { name: 'LinkedIN', link: 'https://linkedin.com' },
-  { name: 'X', link: 'https://x.com' },
+  { name: 'Github', link: 'https://github.com/malmental' },
+  { name: 'LinkedIN', link: 'https://www.linkedin.com/in/orlando-rojas-oyarz%C3%BAn/' },
 ];
 
-// for enabling/disabling maintained by text in footer, if you want.
-export const showDeveloperText = true;
+// =============================================================================
+// 10. FOOTER CONFIGURATION
+// =============================================================================
+
+/**
+ * FOOTER ATTRIBUTION TOGGLE
+ * - Reserved for future use if attribution is needed
+ * - Format: Boolean (true = show, false = hide)
+ */
+export const showDeveloperText = false;

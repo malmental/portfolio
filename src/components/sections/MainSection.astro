@@ -1,36 +1,44 @@
 ---
 import Navbar from '../Navbar';
 import Section from '../Section.astro';
-import SelectedProjectBox from '../SelectedProjectBox.astro';
-const { navLinks, myName, myBio, selectedProjects } = Astro.props;
+import AsciiCanvas from '../AsciiCanvas.astro';
+const { navLinks, myName, myBio } = Astro.props;
 ---
 
-<Section styles='p-1'>
-  <Navbar navLinks={navLinks} client:load />
+<Section styles='p-8 md:p-16 overflow-hidden'>
+  <Navbar navLinks={[]} client:load />
   <div
-    class='mt-[3rem] md:mt-3 flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[80vh] md:min-h-[85vh]'
+    class='relative mt-[3rem] md:mt-3 flex flex-col md:flex-row basis-0 gap-10 md:justify-between md:gap-0 items-start md:items-center w-full min-h-[80vh] md:min-h-[88vh]'
   >
-    <div class='introduction w-[100%] md:w-[60%] p-5'>
-      <div class='intro-text-box'>
-        <h2
-          class='intro-text leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem]'
-        >
-          I'm {myName}.
-        </h2>
-      </div>
+    <div class='introduction relative z-10 w-full md:w-[50%] px-4 md:px-5'>
+      <h2
+        class='intro-text max-w-[10ch] leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold tracking-tight md:tracking-wider text-[3.1rem] sm:text-[3.8rem] md:text-[5rem] lg:text-[6rem] xl:text-[7rem] animate-on-scroll'
+      >
+        I'm {myName}.
+      </h2>
       <p
-        class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify'
+        class='intro-bio mt-5 md:mt-8 mb-2 md:mb-5 max-w-[34rem] leading-7 md:leading-7 text-base sm:text-lg md:text-2xl text-slate-700 text-left md:text-justify text-balance animate-on-scroll'
       >
         {myBio}
       </p>
+      <div class='w-full md:hidden mt-8 animate-on-scroll'>
+        <AsciiCanvas
+          gifSources={['/gif/Cube-shape animation-2.gif']}
+          desktopColumns={48}
+          desktopWidth='100%'
+          desktopMinHeight='18rem'
+          desktopFontSize='clamp(0.65rem, 2.8vw, 0.95rem)'
+        />
+      </div>
     </div>
-    <div
-      class='projects w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
-    >
-      <h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
-        Selected Projects
-      </h3>
-      <SelectedProjectBox projects={selectedProjects} />
+    <div class='hidden md:flex absolute right-[2%] top-[8rem] lg:right-[3%] lg:top-[9rem] xl:right-[4%] xl:top-[10rem] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-95'>
+      <AsciiCanvas
+        gifSources={['/gif/Cube-shape animation-2.gif']}
+        desktopColumns={64}
+        desktopWidth='min(100%, 52rem)'
+        desktopMinHeight='36rem'
+        desktopFontSize='clamp(0.62rem, 1vw, 0.88rem)'
+      />
     </div>
-  </div></Section
->
+  </div>
+</Section>

@@ -1,0 +1,45 @@
+---
+/**
+ * =============================================================================
+ * VIDEOITEM.ASTRO - VIDEO PREVIEW CARD
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Displays a single video preview with autoplay, loop, and controls.
+ *   Includes a title and description text below the video.
+ *   Features fade-in animation when entering viewport.
+ *
+ * PROPS:
+ *   - videoSrc: string (path to video file in /public/videos/)
+ *   - title: string (title above the video)
+ *   - description: string (descriptive text below the video)
+ *
+ * VIDEO BEHAVIOR:
+ *   - autoplay: starts automatically
+ *   - muted: no audio (required for autoplay in most browsers)
+ *   - loop: loops continuously
+ *   - controls: shows play/pause/volume controls
+ *
+ * ANIMATION:
+ *   - Fade-in + slide-up on scroll using Intersection Observer
+ *   - Duration: 0.6s ease-out
+ */
+
+const { videoSrc, title, description, bordered = true } = Astro.props;
+---
+
+<div class='video-item animate-on-scroll flex flex-col gap-3 group'>
+  <div class:list={['relative overflow-hidden rounded-lg', bordered ? 'bg-white p-4 shadow-lg' : 'bg-slate-100']}>
+    <video
+      class='w-full aspect-video object-cover'
+      autoplay
+      muted
+      loop
+      controls
+    >
+      <source src={videoSrc} type='video/mp4' />
+    </video>
+  </div>
+  {title && <h4 class='font-semibold text-lg text-slate-800'>{title}</h4>}
+  {description && <p class='text-sm text-slate-600 leading-relaxed'>{description}</p>}
+</div>

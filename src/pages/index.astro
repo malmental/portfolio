@@ -1,13 +1,44 @@
 ---
+/**
+ * =============================================================================
+ * INDEX.ASTRO - HOMEPAGE PAGE COMPONENT
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   The main entry point of the portfolio. This page assembles and renders all
+ *   primary sections in a single-page scrollable layout: Hero, About, Writing,
+ *   Contact, and Footer. Each section is a separate component for modularity.
+ *
+ * PORTFOLIO USE CASE:
+ *   - This is your landing page - the first thing visitors see
+ *   - Single-page architecture with anchor navigation (smooth scroll)
+ *   - Sections stack vertically on mobile, side-by-side layout on desktop
+ *
+ * PAGE STRUCTURE (top to bottom):
+ *   1. MainSection     → Hero presentation with name, bio, featured projects
+ *   2. AboutSection    → Extended biography, skills, work experience
+ *   3. BlogSection     → Writing preview with recent posts
+ *   4. ContactSection  → Social/contact links
+ *   5. Footer          → Navigation and copyright
+ *
+ * DATA FLOW:
+ *   All content is imported from data.js and passed as props to each section
+ *   component. The section components handle their own rendering logic.
+ *
+ * MODIFICATION NOTES:
+ *   - To reorder sections: move the section component imports and usage
+ *   - To add a new section: create component in src/components/sections/,
+ *     import here, and add between existing sections
+ *   - To change section behavior: modify the respective section component
+ */
+
 import MainLayout from '../layouts/MainLayout.astro';
 import {
   myName,
   myBio,
   navLinks,
-  selectedProjects,
   aboutMe,
   skills,
-  workExperiences,
   writingText,
   contactText,
   contactOptions,
@@ -24,12 +55,10 @@ import ContactSection from '../components/sections/ContactSection.astro';
     navLinks={navLinks}
     myName={myName}
     myBio={myBio}
-    selectedProjects={selectedProjects}
   />
   <AboutSection
     aboutMe={aboutMe}
     skills={skills}
-    workExperiences={workExperiences}
   />
   <BlogSection writingText={writingText} />
   <ContactSection contactText={contactText} contactOptions={contactOptions} />

@@ -1,23 +1,51 @@
 ---
-const { contact } = Astro.props;
+/**
+ * =============================================================================
+ * CONTACTBOXITEM.ASTRO - SOCIAL/CONTACT LINK ITEM
+ * =============================================================================
+ *
+ * PURPOSE:
+ *   Renders a single social or contact link as an interactive row with
+ *   icon indicator. Used in the ContactSection to display available
+ *   platforms for connecting with Salem.
+ *
+ * PORTFOLIO USE CASE:
+ *   - Displays individual social media/professional links
+ *   - Common platforms: GitHub, LinkedIn, Instagram, Twitter/X, WhatsApp
+ *   - Entire row is clickable with hover animation
+ *
+ * PROPS:
+ *   - contact: Object { name: string, link: string }
+ *     - name: Display label (e.g., "GitHub")
+ *     - link: URL to the profile/page
+ *   - icon: string (optional) - Raw SVG HTML to render as the platform icon
+ *
+ * FEATURES:
+ *   - Platform name displayed as clickable text
+ *   - Custom SVG icon displayed (when provided)
+ *   - Border animates from transparent to black on hover
+ *
+ * HOVER STATES:
+ *   - Text color: text-slate-500 → text-black
+ *   - Border: transparent → border-b-2 (black)
+ *   - Font weight: normal → semibold
+ *   - Icon color inherits text color transition
+ *
+ * MODIFICATION NOTES:
+ *   - To add email link: use mailto: prefix (e.g., link: 'mailto:salem@example.com')
+ *   - To add phone: similarly use tel: prefix
+ *   - To change hover colors: modify text-slate-500 and hover:text-black
+ */
+
+const { contact, icon } = Astro.props;
 ---
 
 <a
   href={contact.link}
-  class='group cursor-pointer flex w-full p-5 items-center justify-between transition duration-300 text-slate-500 hover:text-black border-b-2 hover:border-black hover:font-semibold'
+  class='animate-on-scroll group cursor-pointer flex w-full p-5 items-center justify-between transition duration-300 text-slate-500 hover:text-black hover:font-semibold'
 >
-  <p>{contact.name}</p>
-  <svg
-    xmlns='http://www.w3.org/2000/svg'
-    fill='none'
-    viewBox='0 0 24 24'
-    stroke-width='1.5'
-    stroke='currentColor'
-    class='size-6 hidden group-hover:block transition duration-0'
-  >
-    <path
-      stroke-linecap='round'
-      stroke-linejoin='round'
-      d='M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3'></path>
-  </svg>
+  <div class='flex items-center gap-3'>
+    {icon && <span class='w-6 h-6' set:html={icon} />}
+    <p>{contact.name}</p>
+  </div>
 </a>

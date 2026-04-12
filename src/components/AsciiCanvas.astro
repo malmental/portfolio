@@ -1,0 +1,417 @@
+---
+const {
+  gifSources = ['/gif/Cube-shape animation-2.gif'],
+  desktopColumns = 64,
+  desktopWidth = 'min(100%, 52rem)',
+  desktopMinHeight = '36rem',
+  desktopFontSize = 'clamp(0.62rem, 1vw, 0.88rem)',
+  className = '',
+} = Astro.props;
+---
+
+<div
+  class:list={['ascii-canvas-shell', className]}
+  data-ascii-canvas
+  data-gif-sources={JSON.stringify(gifSources)}
+  data-desktop-columns={desktopColumns}
+  style={`--ascii-desktop-width:${desktopWidth};--ascii-desktop-min-height:${desktopMinHeight};--ascii-desktop-font-size:${desktopFontSize};`}
+>
+  <pre class="ascii-output" aria-label="Animated ASCII artwork"></pre>
+</div>
+
+<script is:inline>
+  (function() {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+      || ('ontouchstart' in window)
+      || (navigator.maxTouchPoints && navigator.maxTouchPoints > 2);
+
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
+    const shouldUseFallback = isMobile && (isSafari || !('ImageDecoder' in window));
+
+    const canvases = document.querySelectorAll('[data-ascii-canvas]');
+
+    canvases.forEach((root) => {
+      if (root.dataset.initialized === 'true') {
+        return;
+      }
+
+      root.dataset.initialized = 'true';
+
+      const output = root.querySelector('.ascii-output');
+      if (!output) {
+        return;
+      }
+
+      const hiddenCanvas = document.createElement('canvas');
+      const context = hiddenCanvas.getContext('2d', { willReadFrequently: true });
+      const charset = ' .,:-=+*#%@';
+      const gifSources = JSON.parse(root.dataset.gifSources || '[]');
+      const desktopColumns = Number(root.dataset.desktopColumns || 64);
+      let rafId = 0;
+      let resizeDebounce = 0;
+
+      const frameToAscii = (imageSource, width, height) => {
+        const columns = desktopColumns;
+        const sourceAspect = height / width || 1;
+        const rows = Math.max(16, Math.floor(columns * sourceAspect * 0.5));
+
+        hiddenCanvas.width = columns;
+        hiddenCanvas.height = rows;
+        context.clearRect(0, 0, columns, rows);
+        context.drawImage(imageSource, 0, 0, columns, rows);
+
+        const { data } = context.getImageData(0, 0, columns, rows);
+        let asciiFrame = '';
+
+        for (let y = 0; y < rows; y += 1) {
+          let line = '';
+
+          for (let x = 0; x < columns; x += 1) {
+            const pixelIndex = (y * columns + x) * 4;
+            const red = data[pixelIndex];
+            const green = data[pixelIndex + 1];
+            const blue = data[pixelIndex + 2];
+            const alpha = data[pixelIndex + 3] / 255;
+            const luminance = (0.2126 * red + 0.7152 * green + 0.0722 * blue) * alpha;
+            const characterIndex = Math.min(
+              charset.length - 1,
+              Math.floor((luminance / 255) * (charset.length - 1))
+            );
+
+            line += alpha < 0.08 ? ' ' : charset[characterIndex];
+          }
+
+          asciiFrame += `${line}\n`;
+        }
+
+        return asciiFrame;
+      };
+
+      const animateDecodedGif = async (sourcePath) => {
+        if (shouldUseFallback || !('ImageDecoder' in window)) {
+          return false;
+        }
+
+        let decoder = null;
+        try {
+          const response = await fetch(sourcePath);
+          if (!response.ok) {
+            return false;
+          }
+
+          const data = await response.arrayBuffer();
+          decoder = new window.ImageDecoder({ data, type: 'image/gif' });
+
+          await Promise.race([
+            decoder.tracks.ready,
+            new Promise((_, reject) => setTimeout(() => reject(new Error('Decoder timeout')), 10000))
+          ]);
+
+          const track = decoder.tracks.selectedTrack;
+          const frameCount = track?.frameCount ?? 0;
+
+          if (!frameCount) {
+            return false;
+          }
+
+          const decodedFrames = [];
+
+          for (let index = 0; index < frameCount; index += 1) {
+            const result = await Promise.race([
+              decoder.decode({ frameIndex: index }),
+              new Promise((_, reject) => setTimeout(() => reject(new Error('Frame decode timeout')), 5000))
+            ]);
+
+            const { image, complete } = result;
+            const duration = image.duration > 0 ? image.duration : 90_000;
+            decodedFrames.push({
+              ascii: frameToAscii(image, image.displayWidth, image.displayHeight),
+              duration: duration / 1000,
+            });
+            image.close();
+
+            if (!complete) {
+              break;
+            }
+          }
+
+          if (!decodedFrames.length) {
+            return false;
+          }
+
+          let frameIndex = 0;
+          let lastTime = 0;
+
+          const renderFrame = (time) => {
+            if (!decodedFrames.length) {
+              return;
+            }
+
+            if (!lastTime) {
+              lastTime = time;
+              output.textContent = decodedFrames[frameIndex].ascii;
+            }
+
+            const currentFrame = decodedFrames[frameIndex];
+            if (time - lastTime >= currentFrame.duration) {
+              frameIndex = (frameIndex + 1) % decodedFrames.length;
+              output.textContent = decodedFrames[frameIndex].ascii;
+              lastTime = time;
+            }
+
+            rafId = window.requestAnimationFrame(renderFrame);
+          };
+
+          output.textContent = decodedFrames[0].ascii;
+          rafId = window.requestAnimationFrame(renderFrame);
+          return true;
+        } catch (error) {
+          console.warn('ImageDecoder failed:', error?.message);
+          return false;
+        } finally {
+          if (decoder) {
+            try { decoder.close(); } catch {}
+          }
+        }
+      };
+
+      // Load omggif library dynamically
+      const loadOmggif = () =>
+        new Promise((resolve, reject) => {
+          if (window.omggif && window.omggif.GIFReader) {
+            resolve(window.omggif);
+            return;
+          }
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/npm/omggif@1.0.10/omggif.js';
+          script.onload = () => {
+            if (window.omggif && window.omggif.GIFReader) {
+              resolve(window.omggif);
+            } else {
+              reject(new Error('omggif loaded but GIFReader not available'));
+            }
+          };
+          script.onerror = () => reject(new Error('Failed to load omggif'));
+          document.head.appendChild(script);
+        });
+
+      // Decode and animate GIF using omggif (for mobile Safari compatibility)
+      const animateGifWithOmggif = async (sourcePath) => {
+        let omggif;
+        try {
+          omggif = await loadOmggif();
+        } catch {
+          return false;
+        }
+
+        if (!omggif || !omggif.GIFReader) {
+          return false;
+        }
+
+        try {
+          const response = await fetch(sourcePath);
+          if (!response.ok) return false;
+
+          const buffer = await response.arrayBuffer();
+          const reader = new omggif.GIFReader(buffer);
+
+          const width = reader.width;
+          const height = reader.height;
+
+          // Create a dedicated canvas for GIF frames
+          const gifCanvas = document.createElement('canvas');
+          gifCanvas.width = width;
+          gifCanvas.height = height;
+          const gifCtx = gifCanvas.getContext('2d', { willReadFrequently: true });
+
+          const frameCount = reader.numFrames();
+          if (!frameCount) return false;
+
+          const decodedFrames = [];
+
+          for (let i = 0; i < frameCount; i++) {
+            try {
+              const frameData = new Uint8Array(width * height * 4);
+              reader.decodeAndBlitFrameRGBA(i, frameData);
+
+              const imageData = gifCtx.createImageData(width, height);
+              imageData.data.set(frameData);
+              gifCtx.putImageData(imageData, 0, 0);
+
+              // Get frame delay (in ms)
+              const frameInfo = reader.frameInfo(i);
+              const delay = (frameInfo.delay && frameInfo.delay > 0) ? frameInfo.delay : 100;
+
+              // Clone the canvas for this frame to avoid mutation issues
+              const frameCanvas = document.createElement('canvas');
+              frameCanvas.width = width;
+              frameCanvas.height = height;
+              frameCanvas.getContext('2d').drawImage(gifCanvas, 0, 0);
+
+              decodedFrames.push({
+                ascii: frameToAscii(frameCanvas, width, height),
+                duration: delay,
+              });
+            } catch {
+              // Skip problematic frames
+            }
+          }
+
+          if (!decodedFrames.length) return false;
+
+          // Animate frames
+          let frameIndex = 0;
+          let lastTime = 0;
+
+          const renderFrame = (time) => {
+            if (!decodedFrames.length) return;
+
+            if (!lastTime) {
+              lastTime = time;
+              output.textContent = decodedFrames[frameIndex].ascii;
+            }
+
+            const currentFrame = decodedFrames[frameIndex];
+            if (time - lastTime >= currentFrame.duration) {
+              frameIndex = (frameIndex + 1) % decodedFrames.length;
+              output.textContent = decodedFrames[frameIndex].ascii;
+              lastTime = time;
+            }
+
+            rafId = window.requestAnimationFrame(renderFrame);
+          };
+
+          output.textContent = decodedFrames[0].ascii;
+          rafId = window.requestAnimationFrame(renderFrame);
+          return true;
+        } catch (error) {
+          console.warn('omggif decode error:', error?.message);
+          return false;
+        }
+      };
+
+      // Static fallback (last resort - single frame)
+      const animateStaticGifFallback = (sourcePath) =>
+        new Promise((resolve) => {
+          const img = new Image();
+          let resolved = false;
+
+          const cleanup = () => {
+            img.onload = null;
+            img.onerror = null;
+          };
+
+          img.onload = () => {
+            if (resolved) return;
+            resolved = true;
+            cleanup();
+            output.textContent = frameToAscii(img, img.naturalWidth, img.naturalHeight);
+            resolve(true);
+          };
+
+          img.onerror = () => {
+            if (resolved) return;
+            resolved = true;
+            cleanup();
+            resolve(false);
+          };
+
+          img.src = sourcePath;
+
+          setTimeout(() => {
+            if (!resolved) {
+              resolved = true;
+              cleanup();
+              resolve(false);
+            }
+          }, 15000);
+        });
+
+      const stop = () => {
+        if (rafId) {
+          window.cancelAnimationFrame(rafId);
+          rafId = 0;
+        }
+      };
+
+      const start = async () => {
+        stop();
+
+        for (const sourcePath of gifSources) {
+          try {
+            // On mobile, use omggif first (works on Safari without ImageDecoder)
+            if (isMobile) {
+              if (await animateGifWithOmggif(sourcePath)) {
+                return;
+              }
+            } else {
+              // On desktop, try ImageDecoder first (faster)
+              if (await animateDecodedGif(sourcePath)) {
+                return;
+              }
+              // Fallback to omggif on desktop if ImageDecoder fails
+              if (await animateGifWithOmggif(sourcePath)) {
+                return;
+              }
+            }
+          } catch (error) {
+            console.warn('Animation error:', error?.message);
+          }
+
+          // Last resort: static single frame
+          try {
+            if (await animateStaticGifFallback(sourcePath)) {
+              return;
+            }
+          } catch (error) {
+            console.warn('animateStaticGifFallback error:', error?.message);
+          }
+        }
+
+        output.textContent = 'ASCII unavailable';
+      };
+
+      start();
+
+      window.addEventListener('resize', () => {
+        window.clearTimeout(resizeDebounce);
+        resizeDebounce = window.setTimeout(() => {
+          start();
+        }, 120);
+      });
+
+      window.addEventListener(
+        'astro:before-swap',
+        () => {
+          stop();
+        },
+        { once: true }
+      );
+    });
+  })();
+</script>
+
+<style>
+  .ascii-canvas-shell {
+    width: var(--ascii-desktop-width);
+    margin-inline: auto;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .ascii-output {
+    min-height: var(--ascii-desktop-min-height);
+    margin: 0;
+    overflow: hidden;
+    white-space: pre;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: var(--ascii-desktop-font-size);
+    line-height: 0.86;
+    letter-spacing: 0;
+    color: rgba(36, 50, 65, 0.94);
+    background: transparent;
+    padding: 0;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.15);
+  }
+</style>

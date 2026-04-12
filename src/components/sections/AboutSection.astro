@@ -1,41 +1,49 @@
 ---
 import Section from '../Section.astro';
 import SkillsBox from '../SkillsBox.astro';
-import WorkExperienceBox from '../WorkExperienceBox.astro';
-const { aboutMe, skills, workExperiences } = Astro.props;
+import AsciiCanvas from '../AsciiCanvas.astro';
+const { aboutMe, skills } = Astro.props;
 ---
 
-<Section styles='p-1 ' ids='about'>
+<Section styles='p-8 md:p-16 overflow-hidden bg-gray-100' ids='about'>
   <div
-    class='flex flex-col md:flex-row basis-0 gap-1 md:justify-between md:gap-[5rem] items-center w-full min-h-[85vh]'
+    class='relative flex flex-col md:flex-row basis-0 gap-10 md:justify-between md:gap-[5rem] items-start md:items-center w-full min-h-[85vh]'
   >
-    <div class='box introduction w-[100%] md:w-[60%] p-5'>
-      <div class='box-text'>
-        <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[4rem] md:text-[6rem]'
-        >
-          About Me
-        </h3>
-        <p
-          class='intro-bio mt-5 md:mt-8 mb-5 leading-6 md:leading-7 md:text-2xl text-slate-700 text-justify'
-        >
-          {aboutMe}
-        </p>
-        <h3
-          class='leading-[4rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] ml-2 md:ml-4'
-        >
-          Skills
-        </h3>
-        <SkillsBox skills={skills} />
+    <div class='box introduction relative z-10 w-full md:w-[50%] md:ml-auto px-4 md:p-5'>
+      <h3
+        class='max-w-[10ch] md:max-w-none leading-[3.2rem] sm:leading-[3.8rem] md:leading-[8rem] font-bold text-[3.1rem] sm:text-[3.8rem] md:text-[6rem] text-left md:text-right animate-on-scroll'
+      >
+        About Me
+      </h3>
+      <p
+        class='intro-bio mt-5 md:mt-8 mb-6 max-w-[36rem] leading-7 md:leading-7 text-base sm:text-lg md:text-2xl text-slate-700 text-left md:text-right text-balance animate-on-scroll'
+      >
+        {aboutMe}
+      </p>
+      <h3
+        class='leading-[2.6rem] md:leading-[8rem] font-bold text-[2rem] md:text-[4rem] text-left md:text-right animate-on-scroll w-full md:w-[50%]'
+      >
+        Skills
+      </h3>
+      <SkillsBox skills={skills} />
+      <div class='w-full md:hidden mt-8 flex justify-center animate-on-scroll'>
+        <AsciiCanvas
+          gifSources={['/gif/Cube-shape animation-3.gif']}
+          desktopColumns={48}
+          desktopWidth='80%'
+          desktopMinHeight='14rem'
+          desktopFontSize='clamp(0.52rem, 2.2vw, 0.76rem)'
+        />
       </div>
     </div>
-    <div
-      class='info-box w-[100%] md:w-[30%] md:mr-5 justify-start flex flex-col gap-5'
-    >
-      <h3 class='heading text-slate-600 uppercase font-semibold ml-4'>
-        Work Experience
-      </h3>
-      <WorkExperienceBox workExperiences={workExperiences} />
+    <div class='hidden md:flex absolute left-[100%] top-[10rem] lg:left-[5%] lg:top-[12rem] xl:left-[6%] px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
+      <AsciiCanvas
+        gifSources={['/gif/Cube-shape animation-3.gif']}
+        desktopColumns={56}
+        desktopWidth='min(100%, 42rem)'
+        desktopMinHeight='30rem'
+        desktopFontSize='clamp(0.52rem, 0.82vw, 0.74rem)'
+      />
     </div>
   </div>
 </Section>
