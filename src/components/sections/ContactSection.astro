@@ -79,17 +79,17 @@ const { contactText } = Astro.props;
         <ContactBoxItem contact={{ name: 'GitHub', link: 'https://github.com/malmental' }} icon={githubIcon} />
         <ContactBoxItem contact={{ name: 'LinkedIn', link: 'https://www.linkedin.com/in/orlando-rojas-oyarz%C3%BAn/' }} icon={linkedinIcon} />
       </div>
-      <div class='md:hidden -mt-4 animate-on-scroll relative'>
-        <div class='absolute right-8 top-0'>
+      <div class='md:hidden -mt-10 animate-on-scroll'>
+        <div class='mx-auto max-w-[75vw]'>
           <AsciiCanvas
             gifSources={['/gif/Cube-shape-animation.gif']}
-            desktopColumns={44}
-            desktopWidth='90%'
-            desktopMinHeight='17rem'
-            desktopFontSize='clamp(0.6rem, 2.5vw, 0.82rem)'
+            desktopColumns={30}
+            desktopWidth='100%'
+            desktopMinHeight='11rem'
+            desktopFontSize='clamp(0.45rem, 2.6vw, 0.7rem)'
           />
         </div>
-        <div class='h-[17rem]'></div>
+        <div class='h-[0.5rem]'></div>
       </div>
     </div>
     <div class='hidden md:flex absolute md:right-[-5rem] md:bottom-[-10rem] lg:right-[-3rem] lg:bottom-[-13rem] xl:right-0 px-2 md:px-0 animate-on-scroll justify-center pointer-events-none z-0 opacity-90'>
