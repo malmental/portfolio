@@ -36,6 +36,41 @@
 const { navLinks } = Astro.props;
 ---
 
-<footer class='mt-8 py-6 text-center'>
+<footer class='mt-8 py-6 text-center footer-fade' data-footer>
   <span class='text-xs text-gray-500'>© {new Date().getFullYear()} ˚. ⭒ Thank u for visiting ⋆˙⟡.</span>
 </footer>
+
+<script is:inline>
+  (function() {
+    const footer = document.querySelector('[data-footer]');
+    if (!footer) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            footer.classList.add('in-view');
+          } else {
+            footer.classList.remove('in-view');
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(footer);
+  })();
+</script>
+
+<style>
+  .footer-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .footer-fade.in-view {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>

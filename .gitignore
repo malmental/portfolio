@@ -26,3 +26,4 @@ pnpm-debug.log*
 #skills
 .agents/
 skills-lock.json
+.qwen/
