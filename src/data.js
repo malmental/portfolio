@@ -42,7 +42,7 @@ export const isTransitionEnabled = true;
  * - Format: String (your artistic/dev name or full name)
  * - Example: 'Salem' or 'Salem Dev Studio'
  */
-export const myName = 'Salem, developer';
+export const myName = 'Salem¸';
 
 /**
  * NAVIGATION LOGO TEXT
@@ -81,7 +81,7 @@ export const navLinks = [
  * - Portfolio Use Case: Write a compelling 2-3 sentence introduction that
  *   captures your artistic dev approach and current focus
  */
-export const myBio = `A passionate Fullstack developer. I like to construct cross-platform software and I'm huge IA enthusiast. Always contribuiting for plus collabs and team growth.`;
+export const myBio = `A passionate fullstack developer. Passionate for software development.`;
 
 // =============================================================================
 // 5. ABOUT SECTION CONTENT (AboutSection)
@@ -95,7 +95,7 @@ export const myBio = `A passionate Fullstack developer. I like to construct cros
  *   as an artistic developer
  */
 export const aboutMe =
-  'I work mainly with Laravel, PHP and MySQL. I`m open for the best adaptive front framework according needs.';
+  'I enjoy building scalable, cross-platform applications with strong interest in AI. I work maintly with Laravel and PHP.';
 
 // =============================================================================
 // 6. BLOG/WRITING SECTION CONTENT (BlogSection)
@@ -108,7 +108,7 @@ export const aboutMe =
  * - Portfolio Use Case: Set the tone for your blog - could be philosophical,
  *   technical, or artistically phrased like the current example
  */
-export const writingText = `I'm currently studying at the IT Academy at Barcelona Activa. Here's a quick shot of my latest webb appliction, an Incident Manager with tags, nested comments and filter search for statisics.`;
+export const writingText = `After working in social communications and journalism, I discovered coding and instantly fell in love with it, so I changed my carrer into sofware development.`;
 
 // =============================================================================
 // 7. CONTACT SECTION CONTENT (ContactSection)
@@ -120,7 +120,7 @@ export const writingText = `I'm currently studying at the IT Academy at Barcelon
  * - Format: String (supports multi-line with backticks)
  * - Portfolio Use Case: Invite visitors to connect, collaborate, or reach out
  */
-export const contactText = `Based in Barcelona, do not hesitate to contact me if any inquier, collab idea or just simply conect and share knowledge, this would the best!.`;
+export const contactText = `Don´t hesitate to get in touch for inquiries, collaboration opportunities, or to connect and exchange knowledge.`;
 
 // =============================================================================
 // 8. SKILLS & EXPERTISE (SkillsBox in AboutSection)

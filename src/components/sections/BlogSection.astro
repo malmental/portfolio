@@ -100,9 +100,9 @@ const godotProjects = [
         <h4 class='font-bold text-3xl md:text-4xl animate-on-scroll text-left md:text-center'>
           My WIP personal project
         </h4>
-        <div class='stagger-container w-full md:w-[50%] flex flex-col gap-10 md:gap-14 justify-center'>
-          {godotProjects.map((project) => (
-            <div class='w-full'>
+        <div class='stagger-container w-full flex flex-col md:flex-row gap-10 md:gap-14'>
+          {godotProjects.map((project, index) => (
+            <div class={`w-full md:w-[50%] ${index === 0 ? 'md:text-right' : 'md:text-left'}`}>
               <VideoItem
                 videoSrc={project.videoSrc}
                 title={project.title}
